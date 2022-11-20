@@ -1,0 +1,10 @@
+<CustomAttributes>
+    <!-- Courtesy of Stefano Ricci (https://github.com/stefanoricci) -->
+    <Title><![CDATA[DOCUMENTO N. 1234-9876]]></Title>    
+    <Attribute Name="document.id"><![CDATA[<string>DOCUMENTO N. 1234-9876</string>]]></Attribute>    
+    <Attribute Name="device.id"><![CDATA[<string>XYZ123</string>]]></Attribute>
+    <Attribute Name="report.nr"><![CDATA[<string>278</string>]]></Attribute>
+    <Attribute Name="receipt.nr"><![CDATA[<string>43</string>]]></Attribute>
+    <Attribute Name="receipt.date"><![CDATA[<string>2020-12-28</string>]]></Attribute>
+    <Attribute Name="fcurrency">EUR</Attribute>
+</CustomAttributes>

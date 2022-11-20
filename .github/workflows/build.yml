@@ -1,0 +1,25 @@
+name: Build and test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore Dandraka.Slurper/Dandraka.Slurper.sln
+    - name: Build
+      run: dotnet build Dandraka.Slurper/Dandraka.Slurper.sln --no-restore
+    - name: Test
+      run: dotnet test Dandraka.Slurper/Dandraka.Slurper.Tests/Dandraka.Slurper.Tests.csproj --no-build --verbosity normal

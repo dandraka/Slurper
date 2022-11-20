@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>10.0</LangVersion>
+    <Authors>Jim (Dimitrios) Andrakakis</Authors>
+    <Company>dandraka.com</Company>
+    <Description>An XmlSlurper implementation in .Net for Xml and Json.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/dandraka/Slurper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dandraka/Slurper/</RepositoryUrl>
+    <Copyright>Copyright (c) 2017 Jim (Dimitrios) Andrakakis</Copyright>
+    <PackageIcon>icon.png</PackageIcon>
+    <Version>2.0</Version>
+    <PackageReleaseNotes>
+Release 2.0 is fully backwards compatible with all previous ones, the only change needed 
+is to change the namespace from Dandraka.XmlUtilities to Dandraka.Slurper.
+In addition to XmlSlurper, a JsonSlurper is now implemented.
+    </PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>xml json parsing dynamic</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+    <None Include="icon.png" Pack="true" PackagePath="icon.png"/>
+  </ItemGroup>
+
+</Project>

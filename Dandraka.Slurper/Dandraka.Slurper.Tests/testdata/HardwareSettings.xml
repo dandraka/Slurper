@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+  <view>
+    <displayIcons>true</displayIcons>
+    <showFiles>false</showFiles>
+  </view>
+  <performance>
+    <usei7>true</usei7>
+    <additionalChecks>
+      <cpu>
+        <useRISC>true</useRISC>
+        <allowOverheat>false</allowOverheat>
+      </cpu>
+      <disk>
+        <minFreeSpace>2</minFreeSpace>
+        <warnFreeSpace>5.5</warnFreeSpace>
+        <brandOptions>
+          <samsung>
+            <usePin>false</usePin>
+          </samsung>
+          <toshiba>
+            <allowLessChecks>false</allowLessChecks>
+            <useBetaFunc>false</useBetaFunc>
+          </toshiba>
+        </brandOptions>
+      </disk>
+    </additionalChecks>
+  </performance>
+</settings>

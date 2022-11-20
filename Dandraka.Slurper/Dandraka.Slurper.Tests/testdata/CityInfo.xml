@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<City Mayor="Roni Mueller" CityHall="Schulstrasse 12">
+  <Name>Wilen bei Wollerau</Name>
+  <Gemeinde>Freienbach</Gemeinde>
+  <Street name="Wolleraustrasse" />
+  <Street name="Hungerstrasse" />
+  <Street name="Rebmattli">
+    <PostCode>8832</PostCode>
+    <HouseNumber>10</HouseNumber>
+    <HouseNumber>12</HouseNumber>
+    <HouseNumber>14</HouseNumber>
+  </Street>
+</City>

@@ -1,5 +1,5 @@
 # Slurper
-An XmlSlurper implementation for .Net. The idea came from [Groovy's XmlSlurper](http://groovy-lang.org/processing-xml.html) which is hugely useful.
+An XmlSlurper implementation in .Net, both for Xml and Json. The idea came from [Groovy's XmlSlurper](http://groovy-lang.org/processing-xml.html) which is hugely useful.
 
 What this does, is convert a piece of xml, e.g.
 
@@ -26,12 +26,12 @@ card.logo.url
 This is done ***without any need to declare the type*** . Behind the scenes it uses a class similar to System.Dynamic.ExpandoObject, named [ToStringExpandoObject](https://gist.github.com/kcuzner/3670e78ae1707a0e959d).
 
 ## Downloading:
-Under the Release tab you can find the binaries to download, but the ***recommended*** way is to use it as a nuget dependency. The nuget package is named Dandraka.XmlUtilities, here: https://www.nuget.org/packages/Dandraka.XmlUtilities .
+Under the Release tab you can find the binaries to download, but the ***recommended*** way is to use it as a nuget dependency. The nuget package is named Dandraka.Slurper, here: https://www.nuget.org/packages/Dandraka.Slurper .
 
 ## Usage:
 
 ```
-using Dandraka.XmlUtilities;
+using Dandraka.Slurper;
 
 public void PrintXmlContents1()
 {
@@ -98,9 +98,13 @@ public void ReadSettings()
 ```
 
 ## Releases: 
-Release 1.3 is fully backwards compatible with 1.1 and 1.2 and has two changes:
-1. Supports CDATA xml nodes and therefore solves issue #2 "Type System.Xml.XmlCDataSection is not supported".
-2. Ignores COMMENT xml nodes and therefore solves issue "Type System.Xml.XmlComment is not supported".
+Release 2.0 implements JsonSlurper and is fully backwards compatible with all previous versions; the only change needed is to change the using clauses, from:
+
+```using Dandraka.XmlUtilities;``` 
+
+to:
+
+```using Dandraka.Slurper;```
 
 ## Note: 
 Although not required by the license, the author kindly asks that you share any improvements you make.
