@@ -1,4 +1,4 @@
-IT License
+MIT License
 
 Note: Although not required by the license, the author kindly asks that you share any improvements you made.
 
