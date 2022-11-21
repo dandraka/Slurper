@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml;
+using System.Text.Json;
 
 namespace Dandraka.Slurper;
 
@@ -18,7 +18,7 @@ public static class JsonSlurper
 {
     /// <summary>
     /// Specifies the suffix for properties generated 
-    /// for repeated xml nodes, i.e. lists.
+    /// for repeated nodes, i.e. lists.
     /// Default value is "List", so for repeated nodes
     /// named "Customer", the generated property
     /// will be named "CustomerList".
@@ -26,21 +26,20 @@ public static class JsonSlurper
     public static string ListSuffix { get; set; } = "List";
 
     /// <summary>
-    /// Parses the given xml file and returns a <c>System.Dynamic.ToStringExpandoObject</c>.
+    /// Parses the given json file and returns a <c>System.Dynamic.ToStringExpandoObject</c>.
     /// </summary>
-    /// <param name="path">The full path to the xml file.</param>
-    /// <returns>A dynamic object generated from the xml data.</returns>
+    /// <param name="path">The full path to the json file.</param>
+    /// <returns>A dynamic object generated from the json data.</returns>
     public static dynamic ParseFile(string path)
     {
         if (!File.Exists(path))
         {
             throw new FileNotFoundException($"File '{path}' was not found.");
-        }
+        }        
 
-        var xmlDoc = new XmlDocument();
-        xmlDoc.Load(path);
+        var jsonDoc = JsonDocument.Parse(File.ReadAllText(path));
 
-        var root = xmlDoc.DocumentElement;
+        var root = jsonDoc.RootElement;
         return AddRecursive(new ToStringExpandoObject(), root);
     }
 
@@ -51,37 +50,36 @@ public static class JsonSlurper
     /// <returns>A dynamic object generated from the xml data.</returns>
     public static dynamic ParseText(string text)
     {
-        var xmlDoc = new XmlDocument();
-        xmlDoc.LoadXml(text);
+        var jsonDoc = JsonDocument.Parse(File.ReadAllText(path));
 
-        var root = xmlDoc.DocumentElement;
+        var root = jsonDoc.RootElement;
         return AddRecursive(new ToStringExpandoObject(), root);
     }
 
-    private static dynamic AddRecursive(ToStringExpandoObject parent, XmlNode xmlObj)
+    private static dynamic AddRecursive(ToStringExpandoObject parent, JsonElement jsonObj)
     {
-        var propertiesList = new List<Tuple<string, XmlNode>>();
+        var propertiesList = new List<Tuple<string, JsonElement>>();
 
-        if (xmlObj.ChildNodes != null)
+        if (jsonObj.ChildNodes != null)
         {
             // ignore xml comments, text and cdata nodes
             // text and cdata are directly added as value
-            foreach (var xmlChild in xmlObj.ChildNodes.OfType<XmlNode>().Where(
+            foreach (var xmlChild in jsonObj.ChildNodes.OfType<JsonElement>().Where(
                 c => (c.LocalName != "#comment") 
                 && (c.LocalName != "#text") 
                 && (c.LocalName != "#cdata-section")).ToList())
             {
                 //Console.WriteLine(xmlChild.LocalName);
                 string name = getValidName(xmlChild.LocalName);
-                propertiesList.Add(new Tuple<string, XmlNode>(name, xmlChild));
+                propertiesList.Add(new Tuple<string, JsonElement>(name, xmlChild));
             }
         }
-        if (xmlObj.Attributes != null)
+        if (jsonObj.Attributes != null)
         {
-            foreach (var xmlChild in xmlObj.Attributes.OfType<XmlAttribute>().ToList())
+            foreach (var xmlChild in jsonObj.Attributes.OfType<XmlAttribute>().ToList())
             {
                 string name = getValidName(xmlChild.LocalName);
-                propertiesList.Add(new Tuple<string, XmlNode>(name, xmlChild));
+                propertiesList.Add(new Tuple<string, JsonElement>(name, xmlChild));
             }
         }
 
@@ -93,9 +91,9 @@ public static class JsonSlurper
             {
                 // add property to parent
                 dynamic newMember = new ToStringExpandoObject();
-                XmlNode node = group.First().Item2;
+                JsonElement node = group.First().Item2;
                 // ignore xml comments
-                newMember.__value = getXmlNodeValue(node);
+                newMember.__value = getJsonElementValue(node);
                 newMember.ToString = (ToStringFunc)(() => newMember.__value);
                 string newMemberName = group.Key;
 
@@ -120,8 +118,8 @@ public static class JsonSlurper
                 {
                     // add property to parent
                     dynamic newMember = new ToStringExpandoObject();
-                    XmlNode node = listNode.Item2;
-                    newMember.__value = getXmlNodeValue(node);
+                    JsonElement node = listNode.Item2;
+                    newMember.__value = getJsonElementValue(node);
                     newMember.ToString = (ToStringFunc)(() => newMember.__value);
                     //string newMemberName = group.Key;
 
@@ -134,7 +132,7 @@ public static class JsonSlurper
         return parent;
     }
 
-    private static string getXmlNodeValue(XmlNode node)
+    private static string getJsonElementValue(JsonElement node)
     {
         if (node is XmlAttribute)
         {
@@ -143,7 +141,7 @@ public static class JsonSlurper
         if (node is XmlElement)
         {
             var e = (node as XmlElement);
-            return e.Value ?? e.ChildNodes.OfType<XmlNode>().FirstOrDefault(
+            return e.Value ?? e.ChildNodes.OfType<JsonElement>().FirstOrDefault(
                 c => (c.LocalName == "#text") 
                 || (c.LocalName == "#cdata-section"))?.Value;
         }

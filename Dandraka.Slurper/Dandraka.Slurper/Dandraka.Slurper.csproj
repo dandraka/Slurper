@@ -22,11 +22,12 @@ In addition to XmlSlurper, a JsonSlurper is now implemented.
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Text.Json" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
-    <None Include="icon.png" Pack="true" PackagePath="icon.png"/>
+    <None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    <None Include="icon.png" Pack="true" PackagePath="icon.png" />
   </ItemGroup>
 
 </Project>
