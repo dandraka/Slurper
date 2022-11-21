@@ -1,0 +1,25 @@
+{
+	"City": {
+		"Name": "Wilen bei Wollerau",
+		"Gemeinde": "Freienbach",
+		"Street": [
+			{
+				"_name": "Wolleraustrasse"
+			},
+			{
+				"_name": "Hungerstrasse"
+			},
+			{
+				"PostCode": "8832",
+				"HouseNumber": [
+					"10",
+					"12",
+					"14"
+				],
+				"_name": "Rebmattli"
+			}
+		],
+		"_Mayor": "Roni Möller",
+		"_CityHall": "Schulstrasse 12"
+	}
+}

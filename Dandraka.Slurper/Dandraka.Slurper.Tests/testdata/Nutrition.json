@@ -1,0 +1,306 @@
+{
+	"nutrition": {
+		"daily-values": {
+			"total-fat": {
+				"_units": "g",
+				"__text": "65"
+			},
+			"saturated-fat": {
+				"_units": "g",
+				"__text": "20"
+			},
+			"cholesterol": {
+				"_units": "mg",
+				"__text": "300"
+			},
+			"sodium": {
+				"_units": "mg",
+				"__text": "2400"
+			},
+			"carb": {
+				"_units": "g",
+				"__text": "300"
+			},
+			"fiber": {
+				"_units": "g",
+				"__text": "25"
+			},
+			"protein": {
+				"_units": "g",
+				"__text": "50"
+			}
+		},
+		"food": [
+			{
+				"name": "Avocado Dip",
+				"mfr": "Sunnydale",
+				"serving": {
+					"_units": "g",
+					"__text": "29"
+				},
+				"calories": {
+					"_total": "110",
+					"_fat": "100"
+				},
+				"total-fat": "11",
+				"saturated-fat": "3",
+				"cholesterol": "5",
+				"sodium": "210",
+				"carb": "2",
+				"fiber": "0",
+				"protein": "1",
+				"vitamins": {
+					"a": "1",
+					"c": "0"
+				},
+				"minerals": {
+					"ca": "0",
+					"fe": "0"
+				}
+			},
+			{
+				"name": "Bagels, New York Style",
+				"mfr": "Thompson",
+				"serving": {
+					"_units": "g",
+					"__text": "104"
+				},
+				"calories": {
+					"_total": "300",
+					"_fat": "35"
+				},
+				"total-fat": "4",
+				"saturated-fat": "1",
+				"cholesterol": "0",
+				"sodium": "510",
+				"carb": "54",
+				"fiber": "3",
+				"protein": "11",
+				"vitamins": {
+					"a": "0",
+					"c": "0"
+				},
+				"minerals": {
+					"ca": "8",
+					"fe": "20"
+				}
+			},
+			{
+				"name": "Beef Frankfurter, Quarter Pound",
+				"mfr": "Armitage",
+				"serving": {
+					"_units": "g",
+					"__text": "115"
+				},
+				"calories": {
+					"_total": "370",
+					"_fat": "290"
+				},
+				"total-fat": "32",
+				"saturated-fat": "15",
+				"cholesterol": "65",
+				"sodium": "1100",
+				"carb": "8",
+				"fiber": "0",
+				"protein": "13",
+				"vitamins": {
+					"a": "0",
+					"c": "2"
+				},
+				"minerals": {
+					"ca": "1",
+					"fe": "6"
+				}
+			},
+			{
+				"name": "Chicken Pot Pie",
+				"mfr": "Lakeson",
+				"serving": {
+					"_units": "g",
+					"__text": "198"
+				},
+				"calories": {
+					"_total": "410",
+					"_fat": "200"
+				},
+				"total-fat": "22",
+				"saturated-fat": "9",
+				"cholesterol": "25",
+				"sodium": "810",
+				"carb": "42",
+				"fiber": "2",
+				"protein": "10",
+				"vitamins": {
+					"a": "20",
+					"c": "2"
+				},
+				"minerals": {
+					"ca": "2",
+					"fe": "10"
+				}
+			},
+			{
+				"name": "Cole Slaw",
+				"mfr": "Fresh Quick",
+				"serving": {
+					"_units": " cup",
+					"__text": "1.5"
+				},
+				"calories": {
+					"_total": "20",
+					"_fat": "0"
+				},
+				"total-fat": "0",
+				"saturated-fat": "0",
+				"cholesterol": "0",
+				"sodium": "15",
+				"carb": "5",
+				"fiber": "2",
+				"protein": "1",
+				"vitamins": {
+					"a": "30",
+					"c": "45"
+				},
+				"minerals": {
+					"ca": "4",
+					"fe": "2"
+				}
+			},
+			{
+				"name": "Eggs",
+				"mfr": "Goodpath",
+				"serving": {
+					"_units": "g",
+					"__text": "50"
+				},
+				"calories": {
+					"_total": "70",
+					"_fat": "40"
+				},
+				"total-fat": "4.5",
+				"saturated-fat": "1.5",
+				"cholesterol": "215",
+				"sodium": "65",
+				"carb": "1",
+				"fiber": "0",
+				"protein": "6",
+				"vitamins": {
+					"a": "6",
+					"c": "0"
+				},
+				"minerals": {
+					"ca": "2",
+					"fe": "4"
+				}
+			},
+			{
+				"name": "Hazelnut Spread",
+				"mfr": "Ferreira",
+				"serving": {
+					"_units": "tbsp",
+					"__text": "2"
+				},
+				"calories": {
+					"_total": "200",
+					"_fat": "90"
+				},
+				"total-fat": "10",
+				"saturated-fat": "2",
+				"cholesterol": "0",
+				"sodium": "20",
+				"carb": "23",
+				"fiber": "2",
+				"protein": "3",
+				"vitamins": {
+					"a": "0",
+					"c": "0"
+				},
+				"minerals": {
+					"ca": "6",
+					"fe": "4"
+				}
+			},
+			{
+				"name": "Potato Chips",
+				"mfr": "Lees",
+				"serving": {
+					"_units": "g",
+					"__text": "28"
+				},
+				"calories": {
+					"_total": "150",
+					"_fat": "90"
+				},
+				"total-fat": "10",
+				"saturated-fat": "3",
+				"cholesterol": "0",
+				"sodium": "180",
+				"carb": "15",
+				"fiber": "1",
+				"protein": "2",
+				"vitamins": {
+					"a": "0",
+					"c": "10"
+				},
+				"minerals": {
+					"ca": "0",
+					"fe": "0"
+				}
+			},
+			{
+				"name": "Soy Patties, Grilled",
+				"mfr": "Gardenproducts",
+				"serving": {
+					"_units": "g",
+					"__text": "96"
+				},
+				"calories": {
+					"_total": "160",
+					"_fat": "45"
+				},
+				"total-fat": "5",
+				"saturated-fat": "0",
+				"cholesterol": "0",
+				"sodium": "420",
+				"carb": "10",
+				"fiber": "4",
+				"protein": "9",
+				"vitamins": {
+					"a": "0",
+					"c": "0"
+				},
+				"minerals": {
+					"ca": "0",
+					"fe": "0"
+				}
+			},
+			{
+				"name": "Truffles, Dark Chocolate",
+				"mfr": "Lyndon's",
+				"serving": {
+					"_units": "g",
+					"__text": "39"
+				},
+				"calories": {
+					"_total": "220",
+					"_fat": "170"
+				},
+				"total-fat": "19",
+				"saturated-fat": "14",
+				"cholesterol": "25",
+				"sodium": "10",
+				"carb": "16",
+				"fiber": "1",
+				"protein": "1",
+				"vitamins": {
+					"a": "0",
+					"c": "0"
+				},
+				"minerals": {
+					"ca": "0",
+					"fe": "0"
+				}
+			}
+		]
+	}
+}

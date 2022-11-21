@@ -1,0 +1,10 @@
+{
+    "book": {
+      "author": "Gambardella, Matthew",
+      "title": "XML Developer's Guide",
+      "genre": "Computer",
+      "price": 44.95,
+      "publish_date": "2000-10-01",
+      "description": "An in-depth look at creating applications\n    with XML."
+    }
+  }

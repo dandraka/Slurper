@@ -15,8 +15,8 @@ public class JsonSlurperTests
     [Fact]
     public void T01_ObjectNotNullTest()
     {
-        var city1 = JsonSlurper.ParseText(getFile("City.xml"));
-        var city2 = JsonSlurper.ParseFile(getFileFullPath("City.xml"));
+        var city1 = JsonSlurper.ParseText(getFile("City.json"));
+        var city2 = JsonSlurper.ParseFile(getFileFullPath("City.json"));
 
         foreach (var city in new[] { city1, city2 })
         {
@@ -28,8 +28,8 @@ public class JsonSlurperTests
     [Fact]
     public void T02_SimpleXmlAttributesTest()
     {
-        var book1 = JsonSlurper.ParseText(getFile("Book.xml"));
-        var book2 = JsonSlurper.ParseFile(getFileFullPath("Book.xml"));
+        var book1 = JsonSlurper.ParseText(getFile("Book.json"));
+        var book2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
 
         foreach (var book in new[] { book1, book2 })
         {
@@ -41,8 +41,8 @@ public class JsonSlurperTests
     [Fact]
     public void T03_SimpleXmlNodesTest()
     {
-        var book1 = JsonSlurper.ParseText(getFile("Book.xml"));
-        var book2 = JsonSlurper.ParseFile(getFileFullPath("Book.xml"));
+        var book1 = JsonSlurper.ParseText(getFile("Book.json"));
+        var book2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
 
         foreach (var book in new[] { book1, book2 })
         {
@@ -56,8 +56,8 @@ public class JsonSlurperTests
     [Fact]
     public void T04_XmlMultipleLevelsNodesTest()
     {
-        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.xml"));
-        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.xml"));
+        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
+        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
 
         foreach (var settings in new[] { settings1, settings2 })
         {
@@ -69,8 +69,8 @@ public class JsonSlurperTests
     [Fact]
     public void T05_ListXmlNodesTest()
     {
-        var catalog1 = JsonSlurper.ParseText(getFile("BookCatalog.xml"));
-        var catalog2 = JsonSlurper.ParseFile(getFileFullPath("BookCatalog.xml"));
+        var catalog1 = JsonSlurper.ParseText(getFile("BookCatalog.json"));
+        var catalog2 = JsonSlurper.ParseFile(getFileFullPath("BookCatalog.json"));
 
         foreach (var catalog in new[] { catalog1, catalog2 })
         {
@@ -104,8 +104,8 @@ public class JsonSlurperTests
     [Fact]
     public void T06_BothPropertiesAndListRootXmlTest()
     {
-        var nutrition1 = JsonSlurper.ParseText(getFile("Nutrition.xml"));
-        var nutrition2 = JsonSlurper.ParseFile(getFileFullPath("Nutrition.xml"));
+        var nutrition1 = JsonSlurper.ParseText(getFile("Nutrition.json"));
+        var nutrition2 = JsonSlurper.ParseFile(getFileFullPath("Nutrition.json"));
 
         foreach (var nutrition in new[] { nutrition1, nutrition2 })
         {
@@ -126,8 +126,8 @@ public class JsonSlurperTests
     [Fact]
     public void T07_BothPropertiesAndListRecursiveXmlTest()
     {
-        var city1 = JsonSlurper.ParseText(getFile("CityInfo.xml"));
-        var city2 = JsonSlurper.ParseFile(getFileFullPath("CityInfo.xml"));
+        var city1 = JsonSlurper.ParseText(getFile("CityInfo.json"));
+        var city2 = JsonSlurper.ParseFile(getFileFullPath("CityInfo.json"));
 
         foreach (var city in new[] { city1, city2 })
         {
@@ -199,8 +199,8 @@ public class JsonSlurperTests
     [Fact]
     public void T10_BoolIntDecimalDoubleTest()
     {
-        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.xml"));
-        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.xml"));
+        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
+        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
 
         foreach (var settings in new[] { settings1, settings2 })
         {
@@ -232,8 +232,8 @@ public class JsonSlurperTests
     [Fact]
     public void T11_ConversionExceptionTest()
     {
-        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.xml"));
-        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.xml"));
+        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
+        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
 
         foreach (var settings in new[] { settings1, settings2 })
         {
@@ -259,8 +259,8 @@ public class JsonSlurperTests
     [Fact]
     public void T12_CDataTest()
     {
-        var cdata1 = JsonSlurper.ParseText(getFile("CData.xml"));
-        var cdata2 = JsonSlurper.ParseFile(getFileFullPath("CData.xml"));
+        var cdata1 = JsonSlurper.ParseText(getFile("CData.json"));
+        var cdata2 = JsonSlurper.ParseFile(getFileFullPath("CData.json"));
 
         foreach (var cdata in new[] { cdata1, cdata2 })
         {
@@ -289,13 +289,13 @@ public class JsonSlurperTests
         var urlList = new List<string>()
         {
             // 1MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/mondial/mondial-3.0.xml",
+            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/mondial/mondial-3.0.json",
             // 30 MB                
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.xml" /*,
+            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.json" /*,
             // 109 MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/SwissProt/SwissProt.xml",
+            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/SwissProt/SwissProt.json",
             // 683 MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/pir/psd7003.xml"*/
+            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/pir/psd7003.json"*/
         };
 
         var getter = getHttpFiles(urlList);

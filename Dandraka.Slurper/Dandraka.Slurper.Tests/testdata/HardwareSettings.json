@@ -1,0 +1,30 @@
+{
+	"settings": {
+		"view": {
+			"displayIcons": "true",
+			"showFiles": "false"
+		},
+		"performance": {
+			"usei7": "true",
+			"additionalChecks": {
+				"cpu": {
+					"useRISC": "true",
+					"allowOverheat": "false"
+				},
+				"disk": {
+					"minFreeSpace": "2",
+					"warnFreeSpace": "5.5",
+					"brandOptions": {
+						"samsung": {
+							"usePin": "false"
+						},
+						"toshiba": {
+							"allowLessChecks": "false",
+							"useBetaFunc": "false"
+						}
+					}
+				}
+			}
+		}
+	}
+}
