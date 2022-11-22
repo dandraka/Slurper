@@ -289,9 +289,9 @@ public class XmlSlurperTests
         var urlList = new List<string>()
         {
             // 1MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/mondial/mondial-3.0.xml",
+            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/mondial/mondial-3.0.xml" /*,
             // 30 MB                
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.xml" /*,
+            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.xml",
             // 109 MB
             "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/SwissProt/SwissProt.xml",
             // 683 MB
