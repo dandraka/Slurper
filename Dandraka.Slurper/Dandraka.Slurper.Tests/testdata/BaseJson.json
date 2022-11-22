@@ -1,0 +1,18 @@
+﻿{
+  "Name": "Joe",
+  "Age": 22,
+  "CanDrive": true,
+  "ContactDetails": {
+    "Email": "joe@hotmail.com",
+    "Mobile": "07738277382",
+    "Fax": null
+  },
+  "Addresses": [
+    {
+      "Line1": "15 Beer Bottle Street"
+    },
+    {
+      "Line1": "Shell Cottage"
+    }
+  ]
+}

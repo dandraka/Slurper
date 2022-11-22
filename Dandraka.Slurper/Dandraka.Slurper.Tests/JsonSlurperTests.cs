@@ -15,14 +15,35 @@ public class JsonSlurperTests
     [Fact]
     public void T01_ObjectNotNullTest()
     {
+        var person = JsonSlurper.ParseText(getFile("BaseJson.json"));
         var city1 = JsonSlurper.ParseText(getFile("City.json"));
         var city2 = JsonSlurper.ParseFile(getFileFullPath("City.json"));
 
-        foreach (var city in new[] { city1, city2 })
+        foreach (var jsonData in new[] { person, city1, city2 })
         {
-            Assert.NotNull(city);
-            Assert.NotNull(city.Name);
+            Assert.NotNull(jsonData);
+            Assert.NotNull(jsonData.Name);
         }
+    }
+
+    [Fact]
+    public void T02_BaseJsonAttributesTest()
+    {
+        var person = JsonSlurper.ParseText(getFile("BaseJson.json"));
+
+        // assert simple elements
+        Assert.Equal("Joe", person.Name);
+        Assert.Equal(22, person.Age);
+        Assert.Equal(true, person.CanDrive);
+
+        // assert object
+        Assert.Equal("joe@hotmail.com", person.ContactDetails.Email);
+        Assert.Equal("07738277382", person.ContactDetails.Mobile);
+        Assert.Null(person.ContactDetails.Fax);
+
+        // assert array
+        Assert.Equal("15 Beer Bottle Street", person.Addresses[0].Line1);
+        Assert.Equal("Shell Cottage", person.Addresses[1].Line1);
     }
 
     [Fact]

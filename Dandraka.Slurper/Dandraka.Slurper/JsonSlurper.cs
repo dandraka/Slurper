@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace Dandraka.Slurper;
 
@@ -35,7 +36,7 @@ public static class JsonSlurper
         if (!File.Exists(path))
         {
             throw new FileNotFoundException($"File '{path}' was not found.");
-        }        
+        }
 
         var jsonDoc = JsonDocument.Parse(File.ReadAllText(path));
 
@@ -50,40 +51,78 @@ public static class JsonSlurper
     /// <returns>A dynamic object generated from the xml data.</returns>
     public static dynamic ParseText(string text)
     {
-        var jsonDoc = JsonDocument.Parse(File.ReadAllText(path));
+        var jsonDoc = JsonDocument.Parse(text);
 
         var root = jsonDoc.RootElement;
         return AddRecursive(new ToStringExpandoObject(), root);
     }
 
-    private static dynamic AddRecursive(ToStringExpandoObject parent, JsonElement jsonObj)
+    private static dynamic AddRecursive(ToStringExpandoObject parent, object obj)
     {
-        var propertiesList = new List<Tuple<string, JsonElement>>();
-
-        if (jsonObj.ChildNodes != null)
+        object jsonObj = null;
+        if (obj is JsonProperty)
         {
-            // ignore xml comments, text and cdata nodes
-            // text and cdata are directly added as value
-            foreach (var xmlChild in jsonObj.ChildNodes.OfType<JsonElement>().Where(
-                c => (c.LocalName != "#comment") 
-                && (c.LocalName != "#text") 
-                && (c.LocalName != "#cdata-section")).ToList())
+            var jsonValue = ((JsonProperty)obj).Value;
+
+            switch (jsonValue.ValueKind)
             {
-                //Console.WriteLine(xmlChild.LocalName);
-                string name = getValidName(xmlChild.LocalName);
-                propertiesList.Add(new Tuple<string, JsonElement>(name, xmlChild));
+                case JsonValueKind.Object:
+                case JsonValueKind.Array:
+                    // TODO
+                    //jsonObj = jsonValue;
+                    break;
+                case JsonValueKind.String:
+                case JsonValueKind.Number:
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                case JsonValueKind.Null:
+                    break;
+                //case JsonValueKind.Undefined:
+                default:
+                    throw new NotSupportedException($"Json ValueKind '{jsonValue.ValueKind}' is not supported");
             }
         }
-        if (jsonObj.Attributes != null)
+
+        if (obj is JsonElement)
         {
-            foreach (var xmlChild in jsonObj.Attributes.OfType<XmlAttribute>().ToList())
+            jsonObj = obj;
+        }
+
+        if (jsonObj == null)
+        {
+            return parent;
+        }
+
+        var propertiesList = new List<Tuple<string, object>>();
+
+        if (jsonObj is JsonElement)
+        {
+            var jsonElement = (JsonElement)jsonObj;
+            var jsonChildren = jsonElement.EnumerateObject().ToList();
+
+            if (jsonChildren != null && jsonChildren.Any())
             {
-                string name = getValidName(xmlChild.LocalName);
-                propertiesList.Add(new Tuple<string, JsonElement>(name, xmlChild));
+                foreach (var jsonChild in jsonChildren)
+                {
+                    string name = getValidName(jsonChild.Name);
+                    Debug.WriteLine($"{jsonChild.Name} = {name}");
+                    propertiesList.Add(new Tuple<string, object>(name, jsonChild));
+                }
             }
         }
 
-        // attribute + list names
+        /*
+        if (attributes != null && attributes.Any())
+        {
+            foreach (var attribute in attributes)
+            {
+                string name = getValidName(attribute.Name);
+                propertiesList.Add(new Tuple<string, JsonProperty>(name, attribute));
+            }
+        }
+        */
+
+        // determine list names
         var groups = propertiesList.GroupBy(x => x.Item1);
         foreach (var group in groups)
         {
@@ -91,14 +130,13 @@ public static class JsonSlurper
             {
                 // add property to parent
                 dynamic newMember = new ToStringExpandoObject();
-                JsonElement node = group.First().Item2;
-                // ignore xml comments
-                newMember.__value = getJsonElementValue(node);
+                object jsonObjChild = group.First().Item2;
+                newMember.__value = getJsonPropertyValue(jsonObjChild);
                 newMember.ToString = (ToStringFunc)(() => newMember.__value);
                 string newMemberName = group.Key;
 
                 ((IDictionary<string, Object>)parent.Members).Add(newMemberName, newMember);
-                AddRecursive(newMember, node);
+                AddRecursive(newMember, jsonObjChild);
             }
             else
             {
@@ -118,13 +156,13 @@ public static class JsonSlurper
                 {
                     // add property to parent
                     dynamic newMember = new ToStringExpandoObject();
-                    JsonElement node = listNode.Item2;
-                    newMember.__value = getJsonElementValue(node);
+                    object jsonObjChild = listNode.Item2;
+                    newMember.__value = getJsonPropertyValue(jsonObjChild);
                     newMember.ToString = (ToStringFunc)(() => newMember.__value);
                     //string newMemberName = group.Key;
 
                     newList.Add(newMember);
-                    AddRecursive(newMember, node);
+                    AddRecursive(newMember, jsonObjChild);
                 }
             }
         }
@@ -132,26 +170,38 @@ public static class JsonSlurper
         return parent;
     }
 
-    private static string getJsonElementValue(JsonElement node)
+    private static string getJsonPropertyValue(object jsonObj)
     {
-        if (node is XmlAttribute)
+        if (!(jsonObj is JsonProperty))
         {
-            return (node as XmlAttribute).Value;
+            throw new NotSupportedException($"Type {jsonObj.GetType().FullName} is not supported");
         }
-        if (node is XmlElement)
+
+        string rawText = null;
+        switch (((JsonProperty)jsonObj).Value.ValueKind)
         {
-            var e = (node as XmlElement);
-            return e.Value ?? e.ChildNodes.OfType<JsonElement>().FirstOrDefault(
-                c => (c.LocalName == "#text") 
-                || (c.LocalName == "#cdata-section"))?.Value;
+            case JsonValueKind.String:
+                rawText = ((JsonProperty)jsonObj).Value.GetString();
+                break;
+            case JsonValueKind.Number:
+            case JsonValueKind.True:
+            case JsonValueKind.False:
+                // ToStringExpandoObject takes care about conversion
+                rawText = ((JsonProperty)jsonObj).Value.GetRawText();
+                break;
+            case JsonValueKind.Undefined:
+            case JsonValueKind.Object:
+            case JsonValueKind.Array:
+            case JsonValueKind.Null:
+                // stays null
+                break;
+            default:
+                throw new NotSupportedException($"JsonProperty ValueKind {((JsonProperty)jsonObj).Value.ValueKind} is not supported");
         }
-        if (node is XmlCDataSection)
-        {
-            var e = (node as XmlCDataSection);
-            return e.Value;
-        }
-        throw new NotSupportedException($"Type {node.GetType().FullName} is not supported");
-    }        
+
+        Debug.WriteLine(rawText);
+        return rawText;
+    }
 
     private static string getValidName(string nodeName)
     {
