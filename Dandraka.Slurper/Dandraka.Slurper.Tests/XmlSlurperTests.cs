@@ -131,10 +131,10 @@ public class XmlSlurperTests
 
         foreach (var city in new[] { city1, city2 })
         {
-            Assert.True(city.Mayor == "Roni Mueller");
-            Assert.True(city.CityHall == "Schulstrasse 12");
-            Assert.True(city.Name == "Wilen bei Wollerau");
-            Assert.True(city.Gemeinde == "Freienbach");
+            Assert.Equal("Roni Müller", city.Mayor);
+            Assert.Equal("Schulstrasse 12", city.CityHall);
+            Assert.Equal("Wilen bei Wollerau", city.Name);
+            Assert.Equal("Freienbach", city.Gemeinde);
 
             Assert.Equal(3, city.StreetList.Count);
 

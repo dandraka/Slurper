@@ -37,8 +37,8 @@ public class JsonSlurperTests
         Assert.Equal(22, person.Age);
         Assert.Equal(true, person.CanDrive);
 
-        Assert.Null(person.ContactDetails);
-        Assert.Null(person.Addresses);
+        Assert.Null(person.ContactDetails.ToString());
+        Assert.Null(person.Addresses.ToString());
 
         // assert object
         /* NOT READY
