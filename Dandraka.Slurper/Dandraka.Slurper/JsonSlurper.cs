@@ -64,22 +64,16 @@ public static class JsonSlurper
         {
             var jsonValue = ((JsonProperty)obj).Value;
 
+            // here we only care about ValueKind that
+            // may have nested elements
             switch (jsonValue.ValueKind)
             {
                 case JsonValueKind.Object:
                 case JsonValueKind.Array:
-                    // TODO
-                    //jsonObj = jsonValue;
+                    jsonObj = jsonValue;
                     break;
-                case JsonValueKind.String:
-                case JsonValueKind.Number:
-                case JsonValueKind.True:
-                case JsonValueKind.False:
-                case JsonValueKind.Null:
-                    break;
-                //case JsonValueKind.Undefined:
                 default:
-                    throw new NotSupportedException($"Json ValueKind '{jsonValue.ValueKind}' is not supported");
+                    break;
             }
         }
 
@@ -98,29 +92,37 @@ public static class JsonSlurper
         if (jsonObj is JsonElement)
         {
             var jsonElement = (JsonElement)jsonObj;
-            var jsonChildren = jsonElement.EnumerateObject().ToList();
+            List<object> jsonChildren = null;
+            if (jsonElement.ValueKind == JsonValueKind.Object)
+            {
+                jsonChildren = jsonElement.EnumerateObject().Select(x => (object)x).ToList();
+            }
+            if (jsonElement.ValueKind == JsonValueKind.Array)
+            {
+                // TODO
+                //jsonChildren = jsonElement.EnumerateArray().Select(x => (object)x).ToList();
+            }
 
             if (jsonChildren != null && jsonChildren.Any())
             {
                 foreach (var jsonChild in jsonChildren)
                 {
-                    string name = getValidName(jsonChild.Name);
-                    Debug.WriteLine($"{jsonChild.Name} = {name}");
+                    string jsonName = null;
+                    if (jsonChild is JsonElement)
+                    {
+                        // TODO
+                        jsonName = "lalala"; 
+                    }
+                    if (jsonChild is JsonProperty)
+                    {
+                        jsonName = ((JsonProperty)jsonChild).Name;
+                    }
+                    string name = getValidName(jsonName);
+                    Debug.WriteLine($"{jsonName} = {name}");
                     propertiesList.Add(new Tuple<string, object>(name, jsonChild));
                 }
             }
         }
-
-        /*
-        if (attributes != null && attributes.Any())
-        {
-            foreach (var attribute in attributes)
-            {
-                string name = getValidName(attribute.Name);
-                propertiesList.Add(new Tuple<string, JsonProperty>(name, attribute));
-            }
-        }
-        */
 
         // determine list names
         var groups = propertiesList.GroupBy(x => x.Item1);

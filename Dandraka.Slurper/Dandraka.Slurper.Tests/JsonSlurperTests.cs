@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,18 +12,18 @@ namespace Dandraka.Slurper.Tests;
 
 public class JsonSlurperTests
 {
-    [Fact(Skip = "not ready")]
+    [Fact]
     public void T01_ObjectNotNullTest()
     {
-        var person1 = JsonSlurper.ParseText(getFile("BaseJson.json"));
-        var person2 = JsonSlurper.ParseText(getFile("BaseJson.json"));
         var city1 = JsonSlurper.ParseText(getFile("City.json"));
-        var city2 = JsonSlurper.ParseFile(getFileFullPath("City.json"));
+        //var city2 = JsonSlurper.ParseFile(getFileFullPath("City.json"));
 
-        foreach (var jsonData in new[] { person1, person2, city1, city2 })
+        foreach (var jsonData in new[] { city1 /*, city2*/ })
         {
             Assert.NotNull(jsonData);
-            Assert.NotNull(jsonData.Name);
+            Assert.NotNull(jsonData.City);
+            Assert.Null(jsonData.City.ToString());
+            Assert.NotNull(jsonData.City.Name);
         }
     }
 
@@ -41,11 +41,9 @@ public class JsonSlurperTests
         Assert.Null(person.Addresses.ToString());
 
         // assert object
-        /* NOT READY
         Assert.Equal("joe@hotmail.com", person.ContactDetails.Email);
         Assert.Equal("07738277382", person.ContactDetails.Mobile);
-        Assert.Null(person.ContactDetails.Fax);
-        */
+        Assert.Null(person.ContactDetails.Fax.ToString());
 
         // assert array
         /* NOT READY
@@ -54,16 +52,18 @@ public class JsonSlurperTests
         */
     }
 
-    [Fact(Skip = "not ready")]
-    public void T02_SimpleXmlAttributesTest()
+    [Fact]
+    public void T02_SimpleJsonAttributesTest()
     {
         var book1 = JsonSlurper.ParseText(getFile("Book.json"));
         var book2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
 
-        foreach (var book in new[] { book1, book2 })
+        foreach (var bookObj in new[] { book1, book2 })
         {
-            Assert.Equal("bk101", book.id);
-            Assert.Equal("123456789", book.isbn);
+            Assert.Equal("bk101", bookObj.book.id);
+            Assert.Equal("123456789", bookObj.book.isbn);
+            Assert.Equal(44.95, bookObj.book.price);
+            Assert.Equal(true, bookObj.book.instock);
         }
     }
 
