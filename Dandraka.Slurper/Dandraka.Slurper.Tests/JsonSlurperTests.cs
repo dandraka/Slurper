@@ -12,7 +12,7 @@ namespace Dandraka.Slurper.Tests;
 
 public class JsonSlurperTests
 {
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T01_ObjectNotNullTest()
     {
         var person = JsonSlurper.ParseText(getFile("BaseJson.json"));
@@ -46,7 +46,7 @@ public class JsonSlurperTests
         Assert.Equal("Shell Cottage", person.Addresses[1].Line1);
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T02_SimpleXmlAttributesTest()
     {
         var book1 = JsonSlurper.ParseText(getFile("Book.json"));
@@ -59,7 +59,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T03_SimpleXmlNodesTest()
     {
         var book1 = JsonSlurper.ParseText(getFile("Book.json"));
@@ -74,7 +74,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T04_XmlMultipleLevelsNodesTest()
     {
         var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
@@ -87,7 +87,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T05_ListXmlNodesTest()
     {
         var catalog1 = JsonSlurper.ParseText(getFile("BookCatalog.json"));
@@ -122,7 +122,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T06_BothPropertiesAndListRootXmlTest()
     {
         var nutrition1 = JsonSlurper.ParseText(getFile("Nutrition.json"));
@@ -144,7 +144,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T07_BothPropertiesAndListRecursiveXmlTest()
     {
         var city1 = JsonSlurper.ParseText(getFile("CityInfo.json"));
@@ -167,7 +167,7 @@ public class JsonSlurperTests
     /// <summary>
     /// Usage showcase
     /// </summary>
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T08_PrintXmlContents1()
     {
         string xml = "<book id=\"bk101\" isbn=\"123456789\"><author>Gambardella, Matthew</author><title>XML Developer Guide</title></book>";
@@ -183,7 +183,7 @@ public class JsonSlurperTests
     /// <summary>
     /// Usage showcase
     /// </summary>
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T09_PrintXmlContents2()
     {
         string xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" +
@@ -217,7 +217,7 @@ public class JsonSlurperTests
         Console.WriteLine("T09 name2 = " + nutrition.foodList[1].name);
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T10_BoolIntDecimalDoubleTest()
     {
         var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
@@ -250,7 +250,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T11_ConversionExceptionTest()
     {
         var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
@@ -277,7 +277,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T12_CDataTest()
     {
         var cdata1 = JsonSlurper.ParseText(getFile("CData.json"));
@@ -303,16 +303,15 @@ public class JsonSlurperTests
         }
     }
 
-    //[Fact(Skip = "on dev laptop")]
-    [Fact]
+    [Fact(Skip = "not ready")]
     public void T13_BigXmlTest()
     {
         var urlList = new List<string>()
         {
             // 1MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/mondial/mondial-3.0.json",
+            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/mondial/mondial-3.0.json" /*,
             // 30 MB                
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.json" /*,
+            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.json",
             // 109 MB
             "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/SwissProt/SwissProt.json",
             // 683 MB
