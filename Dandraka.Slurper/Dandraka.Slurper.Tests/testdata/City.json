@@ -1,7 +1,7 @@
 {
-    "City": {
-      "Name": "Wilen bei Wollerau",
-      "Gemeinde": "Freienbach",
-      "Gemeinde.Verkehrsamt": "Schwyz, Pfäffikon, Einsiedeln"
-    }
+  "Name": "Wilen bei Wollerau",
+  "City": {
+    "Gemeinde": "Freienbach",
+    "Gemeinde.Verkehrsamt": "Schwyz, Pfäffikon, Einsiedeln"
   }
+}
