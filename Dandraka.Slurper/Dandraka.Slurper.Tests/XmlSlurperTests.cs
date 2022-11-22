@@ -318,7 +318,7 @@ public class XmlSlurperTests
     private string getFile(string fileName)
     {
         string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "testdata", fileName);
-        return File.ReadAllText(path);
+        return File.ReadAllText(path, Encoding.UTF8);
     }
 
     private string getFileFullPath(string fileName)
