@@ -27,8 +27,8 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
-    public void T02_BaseJsonAttributesTest()
+    [SkippableFact]
+    public void T02_BaseJsonElementsTest()
     {
         var person = JsonSlurper.ParseText(getFile("BaseJson.json"));
 
@@ -46,6 +46,7 @@ public class JsonSlurperTests
         Assert.Null(person.ContactDetails.Fax.ToString());
 
         // assert array
+        Skip.If(true, "Arrays not yet implemented");
         /* NOT READY
         Assert.Equal("15 Beer Bottle Street", person.Addresses[0].Line1);
         Assert.Equal("Shell Cottage", person.Addresses[1].Line1);
@@ -53,57 +54,57 @@ public class JsonSlurperTests
     }
 
     [Fact]
-    public void T02_SimpleJsonAttributesTest()
+    public void T02_SimpleJsonElementsTest()
     {
-        var book1 = JsonSlurper.ParseText(getFile("Book.json"));
-        var book2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
+        var bookInfo1 = JsonSlurper.ParseText(getFile("Book.json"));
+        var bookInfo2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
 
-        foreach (var bookObj in new[] { book1, book2 })
+        foreach (var bookInfo in new[] { bookInfo1, bookInfo2 })
         {
-            Assert.Equal("bk101", bookObj.book.id);
-            Assert.Equal("123456789", bookObj.book.isbn);
-            Assert.Equal(44.95, bookObj.book.price);
-            Assert.Equal(true, bookObj.book.instock);
+            Assert.Equal("bk101", bookInfo.book.id);
+            Assert.Equal("123456789", bookInfo.book.isbn);
+            Assert.Equal(44.95, bookInfo.book.price);
+            Assert.Equal(true, bookInfo.book.instock);
         }
     }
 
-    [Fact(Skip = "not ready")]
-    public void T03_SimpleXmlNodesTest()
+    [Fact]
+    public void T03_SimpleJsonNodesTest()
     {
-        var book1 = JsonSlurper.ParseText(getFile("Book.json"));
-        var book2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
+        var bookInfo1 = JsonSlurper.ParseText(getFile("Book.json"));
+        var bookInfo2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
 
-        foreach (var book in new[] { book1, book2 })
+        foreach (var bookInfo in new[] { bookInfo1, bookInfo2 })
         {
-            Assert.Equal("Gambardella, Matthew", book.author);
-            Assert.Equal("XML Developer's Guide", book.title);
-            Assert.Equal("Computer", book.genre);
-            Assert.Equal("44.95", book.price);
+            Assert.Equal("Gambardella, Matthew", bookInfo.book.author);
+            Assert.Equal("XML Developer's Guide", bookInfo.book.title);
+            Assert.Equal("Computer", bookInfo.book.genre);
+            Assert.Equal("44.95", bookInfo.book.price);
         }
     }
 
-    [Fact(Skip = "not ready")]
-    public void T04_XmlMultipleLevelsNodesTest()
+    [Fact]
+    public void T04_JsonMultipleLevelsNodesTest()
     {
-        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
-        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
+        var settingsInfo1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
+        var settingsInfo2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
 
-        foreach (var settings in new[] { settings1, settings2 })
+        foreach (var settingsInfo in new[] { settingsInfo1, settingsInfo2 })
         {
-            Assert.Equal("true", settings.view.displayIcons);
-            Assert.Equal("false", settings.performance.additionalChecks.disk.brandOptions.toshiba.useBetaFunc);
+            Assert.Equal("true", settingsInfo.settings.view.displayIcons);
+            Assert.Equal("false", settingsInfo.settings.performance.additionalChecks.disk.brandOptions.toshiba.useBetaFunc);
         }
     }
 
-    [Fact(Skip = "not ready")]
-    public void T05_ListXmlNodesTest()
+    [Fact(Skip = "Arrays not yet implemented")]
+    public void T05_ListJsonNodesTest()
     {
-        var catalog1 = JsonSlurper.ParseText(getFile("BookCatalog.json"));
-        var catalog2 = JsonSlurper.ParseFile(getFileFullPath("BookCatalog.json"));
+        var catalogInfo1 = JsonSlurper.ParseText(getFile("BookCatalog.json"));
+        var catalogInfo2 = JsonSlurper.ParseFile(getFileFullPath("BookCatalog.json"));
 
-        foreach (var catalog in new[] { catalog1, catalog2 })
+        foreach (var catalogInfo in new[] { catalogInfo1, catalogInfo2 })
         {
-            var bookList = catalog.bookList;
+            var bookList = catalogInfo.catalog.bookList;
 
             Assert.Equal(12, bookList.Count);
 
@@ -130,15 +131,15 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact(Skip = "not ready")]
+    [Fact(Skip = "Arrays not yet implemented")]
     public void T06_BothPropertiesAndListRootXmlTest()
     {
-        var nutrition1 = JsonSlurper.ParseText(getFile("Nutrition.json"));
-        var nutrition2 = JsonSlurper.ParseFile(getFileFullPath("Nutrition.json"));
+        var nutritionInfo1 = JsonSlurper.ParseText(getFile("Nutrition.json"));
+        var nutritionInfo2 = JsonSlurper.ParseFile(getFileFullPath("Nutrition.json"));
 
-        foreach (var nutrition in new[] { nutrition1, nutrition2 })
+        foreach (var nutritionInfo in new[] { nutritionInfo1, nutritionInfo2 })
         {
-            var foodList = nutrition.foodList;
+            var foodList = nutritionInfo.nutrition.foodList;
 
             Assert.Equal(10, foodList.Count);
 
@@ -152,34 +153,35 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact(Skip = "not ready")]
+    [Fact(Skip = "Arrays not yet implemented")]
     public void T07_BothPropertiesAndListRecursiveXmlTest()
     {
-        var city1 = JsonSlurper.ParseText(getFile("CityInfo.json"));
-        var city2 = JsonSlurper.ParseFile(getFileFullPath("CityInfo.json"));
+        var cityInfo1 = JsonSlurper.ParseText(getFile("Cityinfo.json"));
+        var cityInfo2 = JsonSlurper.ParseFile(getFileFullPath("Cityinfo.json"));
 
-        foreach (var city in new[] { city1, city2 })
+        foreach (var cityInfo in new[] { cityInfo1, cityInfo2 })
         {
-            Assert.True(city.Mayor == "Roni Mueller");
-            Assert.True(city.CityHall == "Schulstrasse 12");
-            Assert.True(city.Name == "Wilen bei Wollerau");
-            Assert.True(city.Gemeinde == "Freienbach");
+            Assert.Equal("Roni Müller", cityInfo.City.Mayor);
+            Assert.Equal("Schulstrasse 12", cityInfo.City.CityHall);
+            Assert.Equal("Wilen bei Wollerau", cityInfo.City.Name);
+            Assert.Equal("Freienbach", cityInfo.City.Gemeinde);
 
-            Assert.Equal(3, city.StreetList.Count);
+            Assert.Equal(3, cityInfo.City.StreetList.Count);
 
-            Assert.Equal("8832", city.StreetList[2].PostCode);
-            Assert.Equal(3, city.StreetList[2].HouseNumberList.Count);
+            Assert.Equal("8832", cityInfo.City.StreetList[2].PostCode);
+            Assert.Equal(3, cityInfo.City.StreetList[2].HouseNumberList.Count);
         }
     }
 
     /// <summary>
     /// Usage showcase
     /// </summary>
-    [Fact(Skip = "not ready")]
+    //[Fact(Skip = "Arrays not yet implemented")]
+    [Fact]
     public void T08_PrintXmlContents1()
     {
-        string xml = "<book id=\"bk101\" isbn=\"123456789\"><author>Gambardella, Matthew</author><title>XML Developer Guide</title></book>";
-        var book = JsonSlurper.ParseText(xml);
+        string json = "{  \"id\": \"bk101\",  \"isbn\": \"123456789\",  \"author\": \"Gambardella, Matthew\",  \"title\": \"XML Developer Guide\"}";
+        var book = JsonSlurper.ParseText(json);
 
         // that's it, now we have everything            
         Console.WriteLine("T08 id = " + book.id);
@@ -191,66 +193,44 @@ public class JsonSlurperTests
     /// <summary>
     /// Usage showcase
     /// </summary>
-    [Fact(Skip = "not ready")]
+    [Fact(Skip = "Arrays not yet implemented")]
+    //[Fact]
     public void T09_PrintXmlContents2()
     {
-        string xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" +
-                        "<nutrition>" +
-                        "	<food>" +
-                        "		<name>Avocado Dip</name>" +
-                        "		<mfr>Sunnydale</mfr>" +
-                        "		<carb>2</carb>" +
-                        "		<fiber>0</fiber>" +
-                        "		<protein>1</protein>" +
-                        "	</food>" +
-                        "	<food>" +
-                        "		<name>Bagels, New York Style </name>" +
-                        "		<mfr>Thompson</mfr>" +
-                        "		<carb>54</carb>" +
-                        "		<fiber>3</fiber>" +
-                        "		<protein>11</protein>" +
-                        "	</food>" +
-                        "	<food>" +
-                        "		<name>Beef Frankfurter, Quarter Pound </name>" +
-                        "		<mfr>Armitage</mfr>" +
-                        "		<carb>8</carb>" +
-                        "		<fiber>0</fiber>" +
-                        "		<protein>13</protein>" +
-                        "	</food>" +
-                        "</nutrition>";
-        var nutrition = JsonSlurper.ParseText(xml);
+        string json = "[  {    \"name\": \"Avocado Dip\",    \"mfr\": \"Sunnydale\",    \"carb\": \"2\",    \"fiber\": \"0\",    \"protein\": \"1\"  },  {    \"name\": \"Bagels, New York Style\",    \"mfr\": \"Thompson\",    \"carb\": \"54\",    \"fiber\": \"3\",    \"protein\": \"11\"  },  {    \"name\": \"Beef Frankfurter, Quarter Pound\",    \"mfr\": \"Armitage\",    \"carb\": \"8\",    \"fiber\": \"0\",    \"protein\": \"13\"  }]";
+        var nutrition = JsonSlurper.ParseText(json);
 
         // since many food nodes were found, a list was generated and named foodList (common name + "List")
         Console.WriteLine("T09 name1 = " + nutrition.foodList[0].name);
         Console.WriteLine("T09 name2 = " + nutrition.foodList[1].name);
     }
 
-    [Fact(Skip = "not ready")]
+    [Fact]
     public void T10_BoolIntDecimalDoubleTest()
     {
-        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
-        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
+        var settingsInfo1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
+        var settingsInfo2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
 
-        foreach (var settings in new[] { settings1, settings2 })
+        foreach (var settingsInfo in new[] { settingsInfo1, settingsInfo2 })
         {
-            Assert.Equal<bool?>(true, settings.view.displayIcons);
-            Assert.Equal<bool?>(false, settings.view.showFiles);
-            Assert.Equal<int?>(2, settings.performance.additionalChecks.disk.minFreeSpace);
-            Assert.Equal<double?>(5.5, settings.performance.additionalChecks.disk.warnFreeSpace);
-            Assert.Equal<decimal?>(5.5m, settings.performance.additionalChecks.disk.warnFreeSpace);
+            Assert.Equal<bool?>(true, settingsInfo.settings.view.displayIcons);
+            Assert.Equal<bool?>(false, settingsInfo.settings.view.showFiles);
+            Assert.Equal<int?>(2, settingsInfo.settings.performance.additionalChecks.disk.minFreeSpace);
+            Assert.Equal<double?>(5.5, settingsInfo.settings.performance.additionalChecks.disk.warnFreeSpace);
+            Assert.Equal<decimal?>(5.5m, settingsInfo.settings.performance.additionalChecks.disk.warnFreeSpace);
 
-            Assert.True(settings.view.displayIcons);
-            Assert.False(settings.view.showFiles);
-            Assert.Equal<int>(2, settings.performance.additionalChecks.disk.minFreeSpace);
-            Assert.Equal<double>(5.5, settings.performance.additionalChecks.disk.warnFreeSpace);
-            Assert.Equal<decimal>(5.5m, settings.performance.additionalChecks.disk.warnFreeSpace);
+            Assert.True(settingsInfo.settings.view.displayIcons);
+            Assert.False(settingsInfo.settings.view.showFiles);
+            Assert.Equal<int>(2, settingsInfo.settings.performance.additionalChecks.disk.minFreeSpace);
+            Assert.Equal<double>(5.5, settingsInfo.settings.performance.additionalChecks.disk.warnFreeSpace);
+            Assert.Equal<decimal>(5.5m, settingsInfo.settings.performance.additionalChecks.disk.warnFreeSpace);
 
             // usage showcase
-            if (!settings.view.displayIcons)
+            if (!settingsInfo.settings.view.displayIcons)
             {
                 Assert.True(false);
             }
-            int? minFreeSpace = settings.performance.additionalChecks.disk.minFreeSpace;
+            int? minFreeSpace = settingsInfo.settings.performance.additionalChecks.disk.minFreeSpace;
             if (minFreeSpace != 2)
             {
                 Assert.True(false);
@@ -258,85 +238,53 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact(Skip = "not ready")]
+    [Fact]
     public void T11_ConversionExceptionTest()
     {
-        var settings1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
-        var settings2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
+        var settingsInfo1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
+        var settingsInfo2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
 
-        foreach (var settings in new[] { settings1, settings2 })
+        foreach (var settingsInfo in new[] { settingsInfo1, settingsInfo2 })
         {
             Assert.Throws<ValueConversionException>(() =>
             {
-                int t = settings.view.displayIcons;
+                int t = settingsInfo.settings.view.displayIcons;
             });
             Assert.Throws<ValueConversionException>(() =>
             {
-                decimal t = settings.view.displayIcons;
+                decimal t = settingsInfo.settings.view.displayIcons;
             });
             Assert.Throws<ValueConversionException>(() =>
             {
-                double t = settings.view.displayIcons;
+                double t = settingsInfo.settings.view.displayIcons;
             });
             Assert.Throws<ValueConversionException>(() =>
             {
-                bool t = settings.performance.additionalChecks.disk.minFreeSpace;
+                bool t = settingsInfo.settings.performance.additionalChecks.disk.minFreeSpace;
             });
         }
     }
 
-    [Fact(Skip = "not ready")]
-    public void T12_CDataTest()
-    {
-        var cdata1 = JsonSlurper.ParseText(getFile("CData.json"));
-        var cdata2 = JsonSlurper.ParseFile(getFileFullPath("CData.json"));
-
-        foreach (var cdata in new[] { cdata1, cdata2 })
-        {
-            // test cdata for single nodes
-            Assert.Equal("DOCUMENTO N. 1234-9876", cdata.Title);
-
-            // test cdata for list nodes
-            dynamic attr = cdata.AttributeList[0];
-            Assert.Equal("document.id", attr.Name);
-            Assert.Equal("<string>DOCUMENTO N. 1234-9876</string>", attr);
-
-            attr = cdata.AttributeList[4];
-            Assert.Equal("receipt.date", attr.Name);
-            Assert.Equal("<string>2020-12-28</string>", attr);
-
-            attr = cdata.AttributeList[5];
-            Assert.Equal("fcurrency", attr.Name);
-            Assert.Equal("EUR", attr);
-        }
-    }
-
-    [Fact(Skip = "not ready")]
-    public void T13_BigXmlTest()
+    [Fact]
+    public void T12_BigJsonTest()
     {
         var urlList = new List<string>()
         {
-            // 1MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/mondial/mondial-3.0.json" /*,
-            // 30 MB                
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.json",
-            // 109 MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/SwissProt/SwissProt.json",
-            // 683 MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/pir/psd7003.json"*/
-    };
+            // 25MB
+            "https://github.com/json-iterator/test-data/blob/master/large-file.json?raw=true"
+        };
 
         var getter = getHttpFiles(urlList);
         getter.Wait(5 * 60 * 1000); // 5min max        
-        var stopWatch = new Stopwatch();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-        foreach (string xml in getter.Result)
-        {   
-            stopWatch.Reset();             
+        var stopWatch = new Stopwatch();
+        foreach (string json in getter.Result)
+        {
+            stopWatch.Reset();
             stopWatch.Start();
-            var cdata = JsonSlurper.ParseText(xml);
+            var cdata = JsonSlurper.ParseText(json);
             stopWatch.Stop();
 
-            Decimal fileSizeMb = Math.Round(xml.Length / (1024m * 1024m), 2);
+            Decimal fileSizeMb = Math.Round(json.Length / (1024m * 1024m), 2);
             Int64 timeMs = stopWatch.ElapsedMilliseconds;
             Decimal speed = Math.Round(timeMs / fileSizeMb, 0);
             Console.WriteLine($"T13 Parsed {fileSizeMb} MB in {timeMs} ms (approx. {speed} ms/MB)");
