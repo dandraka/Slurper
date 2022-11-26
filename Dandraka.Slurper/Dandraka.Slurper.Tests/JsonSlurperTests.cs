@@ -270,8 +270,10 @@ public class JsonSlurperTests
     {
         var urlList = new List<string>()
         {
+            // 2.15MB
+            "https://github.com/miloyip/nativejson-benchmark/blob/master/data/canada.json?raw=true", /*
             // 25MB
-            "https://github.com/json-iterator/test-data/blob/master/large-file.json?raw=true"
+            "https://github.com/json-iterator/test-data/blob/master/large-file.json?raw=true"*/
         };
 
         var getter = getHttpFiles(urlList);
