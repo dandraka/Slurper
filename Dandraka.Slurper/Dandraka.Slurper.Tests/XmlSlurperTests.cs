@@ -14,7 +14,7 @@ public class XmlSlurperTests
 {
     private TestUtility utility = new TestUtility();
 
-    [Fact]
+    [SkippableFact]
     public void T01_ObjectNotNullTest()
     {
         var city1 = XmlSlurper.ParseText(utility.getFile("City.xml"));
@@ -27,7 +27,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T02_SimpleXmlAttributesTest()
     {
         var book1 = XmlSlurper.ParseText(utility.getFile("Book.xml"));
@@ -40,7 +40,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T03_SimpleXmlNodesTest()
     {
         var book1 = XmlSlurper.ParseText(utility.getFile("Book.xml"));
@@ -55,7 +55,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T04_XmlMultipleLevelsNodesTest()
     {
         var settings1 = XmlSlurper.ParseText(utility.getFile("HardwareSettings.xml"));
@@ -68,7 +68,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T05_ListXmlNodesTest()
     {
         var catalog1 = XmlSlurper.ParseText(utility.getFile("BookCatalog.xml"));
@@ -103,7 +103,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T06_BothPropertiesAndListRootXmlTest()
     {
         var nutrition1 = XmlSlurper.ParseText(utility.getFile("Nutrition.xml"));
@@ -125,7 +125,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T07_BothPropertiesAndListRecursiveXmlTest()
     {
         var city1 = XmlSlurper.ParseText(utility.getFile("CityInfo.xml"));
@@ -148,7 +148,7 @@ public class XmlSlurperTests
     /// <summary>
     /// Usage showcase
     /// </summary>
-    [Fact]
+    [SkippableFact]
     public void T08_PrintXmlContents1()
     {
         string xml = "<book id=\"bk101\" isbn=\"123456789\"><author>Gambardella, Matthew</author><title>XML Developer Guide</title></book>";
@@ -164,7 +164,7 @@ public class XmlSlurperTests
     /// <summary>
     /// Usage showcase
     /// </summary>
-    [Fact]
+    [SkippableFact]
     public void T09_PrintXmlContents2()
     {
         string xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" +
@@ -198,7 +198,7 @@ public class XmlSlurperTests
         Console.WriteLine("T09 name2 = " + nutrition.foodList[1].name);
     }
 
-    [Fact]
+    [SkippableFact]
     public void T10_BoolIntDecimalDoubleTest()
     {
         var settings1 = XmlSlurper.ParseText(utility.getFile("HardwareSettings.xml"));
@@ -231,7 +231,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T11_ConversionExceptionTest()
     {
         var settings1 = XmlSlurper.ParseText(utility.getFile("HardwareSettings.xml"));
@@ -258,7 +258,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T12_CDataTest()
     {
         var cdata1 = XmlSlurper.ParseText(utility.getFile("CData.xml"));
@@ -284,7 +284,7 @@ public class XmlSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T13_BigXmlTest()
     {
         var xmlList = new List<string>();

@@ -15,13 +15,13 @@ public class JsonSlurperTests
 
     private TestUtility utility = new TestUtility();
 
-    [Fact]
+    [SkippableFact]
     public void T01_ObjectNotNullTest()
     {
         var city1 = JsonSlurper.ParseText(utility.getFile("City.json"));
-        //var city2 = JsonSlurper.ParseFile(getFileFullPath("City.json"));
+        var city2 = JsonSlurper.ParseFile(utility.getFileFullPath("City.json"));
 
-        foreach (var jsonData in new[] { city1 /*, city2*/ })
+        foreach (var jsonData in new[] { city1, city2 })
         {
             Assert.NotNull(jsonData);
             Assert.NotNull(jsonData.City);
@@ -50,13 +50,12 @@ public class JsonSlurperTests
 
         // assert array
         Skip.If(true, "Arrays not yet implemented");
-        /* NOT READY
+        
         Assert.Equal("15 Beer Bottle Street", person.Addresses[0].Line1);
         Assert.Equal("Shell Cottage", person.Addresses[1].Line1);
-        */
     }
 
-    [Fact]
+    [SkippableFact]
     public void T02_SimpleJsonElementsTest()
     {
         var bookInfo1 = JsonSlurper.ParseText(utility.getFile("Book.json"));
@@ -71,7 +70,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T03_SimpleJsonNodesTest()
     {
         var bookInfo1 = JsonSlurper.ParseText(utility.getFile("Book.json"));
@@ -86,7 +85,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T04_JsonMultipleLevelsNodesTest()
     {
         var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
@@ -99,9 +98,11 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact(Skip = "Arrays not yet implemented")]
+    [SkippableFact]
     public void T05_ListJsonNodesTest()
     {
+        Skip.If(true, "Arrays not yet implemented");
+
         var catalogInfo1 = JsonSlurper.ParseText(utility.getFile("BookCatalog.json"));
         var catalogInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("BookCatalog.json"));
 
@@ -134,9 +135,11 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact(Skip = "Arrays not yet implemented")]
+    [SkippableFact]
     public void T06_BothPropertiesAndListRootXmlTest()
     {
+        Skip.If(true, "Arrays not yet implemented");
+
         var nutritionInfo1 = JsonSlurper.ParseText(utility.getFile("Nutrition.json"));
         var nutritionInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Nutrition.json"));
 
@@ -156,9 +159,11 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact(Skip = "Arrays not yet implemented")]
+    [SkippableFact]
     public void T07_BothPropertiesAndListRecursiveXmlTest()
     {
+        Skip.If(true, "Arrays not yet implemented");
+
         var cityInfo1 = JsonSlurper.ParseText(utility.getFile("Cityinfo.json"));
         var cityInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Cityinfo.json"));
 
@@ -179,8 +184,7 @@ public class JsonSlurperTests
     /// <summary>
     /// Usage showcase
     /// </summary>
-    //[Fact(Skip = "Arrays not yet implemented")]
-    [Fact]
+    [SkippableFact]
     public void T08_PrintXmlContents1()
     {
         string json = "{  \"id\": \"bk101\",  \"isbn\": \"123456789\",  \"author\": \"Gambardella, Matthew\",  \"title\": \"XML Developer Guide\"}";
@@ -196,10 +200,12 @@ public class JsonSlurperTests
     /// <summary>
     /// Usage showcase
     /// </summary>
-    [Fact(Skip = "Arrays not yet implemented")]
-    //[Fact]
+    [SkippableFact]
+    //[SkippableFact]
     public void T09_PrintXmlContents2()
     {
+        Skip.If(true, "Arrays not yet implemented");
+        
         string json = "[  {    \"name\": \"Avocado Dip\",    \"mfr\": \"Sunnydale\",    \"carb\": \"2\",    \"fiber\": \"0\",    \"protein\": \"1\"  },  {    \"name\": \"Bagels, New York Style\",    \"mfr\": \"Thompson\",    \"carb\": \"54\",    \"fiber\": \"3\",    \"protein\": \"11\"  },  {    \"name\": \"Beef Frankfurter, Quarter Pound\",    \"mfr\": \"Armitage\",    \"carb\": \"8\",    \"fiber\": \"0\",    \"protein\": \"13\"  }]";
         var nutrition = JsonSlurper.ParseText(json);
 
@@ -208,7 +214,7 @@ public class JsonSlurperTests
         Console.WriteLine("T09 name2 = " + nutrition.foodList[1].name);
     }
 
-    [Fact]
+    [SkippableFact]
     public void T10_BoolIntDecimalDoubleTest()
     {
         var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
@@ -241,7 +247,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T11_ConversionExceptionTest()
     {
         var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
@@ -268,7 +274,7 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact]
+    [SkippableFact]
     public void T12_BigJsonTest()
     {
         var jsonList = new List<string>();
