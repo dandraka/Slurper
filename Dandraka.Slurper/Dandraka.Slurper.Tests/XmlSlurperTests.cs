@@ -12,11 +12,13 @@ namespace Dandraka.Slurper.Tests;
 
 public class XmlSlurperTests
 {
+    private TestUtility utility = new TestUtility();
+
     [Fact]
     public void T01_ObjectNotNullTest()
     {
-        var city1 = XmlSlurper.ParseText(getFile("City.xml"));
-        var city2 = XmlSlurper.ParseFile(getFileFullPath("City.xml"));
+        var city1 = XmlSlurper.ParseText(utility.getFile("City.xml"));
+        var city2 = XmlSlurper.ParseFile(utility.getFileFullPath("City.xml"));
 
         foreach (var city in new[] { city1, city2 })
         {
@@ -28,8 +30,8 @@ public class XmlSlurperTests
     [Fact]
     public void T02_SimpleXmlAttributesTest()
     {
-        var book1 = XmlSlurper.ParseText(getFile("Book.xml"));
-        var book2 = XmlSlurper.ParseFile(getFileFullPath("Book.xml"));
+        var book1 = XmlSlurper.ParseText(utility.getFile("Book.xml"));
+        var book2 = XmlSlurper.ParseFile(utility.getFileFullPath("Book.xml"));
 
         foreach (var book in new[] { book1, book2 })
         {
@@ -41,8 +43,8 @@ public class XmlSlurperTests
     [Fact]
     public void T03_SimpleXmlNodesTest()
     {
-        var book1 = XmlSlurper.ParseText(getFile("Book.xml"));
-        var book2 = XmlSlurper.ParseFile(getFileFullPath("Book.xml"));
+        var book1 = XmlSlurper.ParseText(utility.getFile("Book.xml"));
+        var book2 = XmlSlurper.ParseFile(utility.getFileFullPath("Book.xml"));
 
         foreach (var book in new[] { book1, book2 })
         {
@@ -56,8 +58,8 @@ public class XmlSlurperTests
     [Fact]
     public void T04_XmlMultipleLevelsNodesTest()
     {
-        var settings1 = XmlSlurper.ParseText(getFile("HardwareSettings.xml"));
-        var settings2 = XmlSlurper.ParseFile(getFileFullPath("HardwareSettings.xml"));
+        var settings1 = XmlSlurper.ParseText(utility.getFile("HardwareSettings.xml"));
+        var settings2 = XmlSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.xml"));
 
         foreach (var settings in new[] { settings1, settings2 })
         {
@@ -69,8 +71,8 @@ public class XmlSlurperTests
     [Fact]
     public void T05_ListXmlNodesTest()
     {
-        var catalog1 = XmlSlurper.ParseText(getFile("BookCatalog.xml"));
-        var catalog2 = XmlSlurper.ParseFile(getFileFullPath("BookCatalog.xml"));
+        var catalog1 = XmlSlurper.ParseText(utility.getFile("BookCatalog.xml"));
+        var catalog2 = XmlSlurper.ParseFile(utility.getFileFullPath("BookCatalog.xml"));
 
         foreach (var catalog in new[] { catalog1, catalog2 })
         {
@@ -104,8 +106,8 @@ public class XmlSlurperTests
     [Fact]
     public void T06_BothPropertiesAndListRootXmlTest()
     {
-        var nutrition1 = XmlSlurper.ParseText(getFile("Nutrition.xml"));
-        var nutrition2 = XmlSlurper.ParseFile(getFileFullPath("Nutrition.xml"));
+        var nutrition1 = XmlSlurper.ParseText(utility.getFile("Nutrition.xml"));
+        var nutrition2 = XmlSlurper.ParseFile(utility.getFileFullPath("Nutrition.xml"));
 
         foreach (var nutrition in new[] { nutrition1, nutrition2 })
         {
@@ -126,8 +128,8 @@ public class XmlSlurperTests
     [Fact]
     public void T07_BothPropertiesAndListRecursiveXmlTest()
     {
-        var city1 = XmlSlurper.ParseText(getFile("CityInfo.xml"));
-        var city2 = XmlSlurper.ParseFile(getFileFullPath("CityInfo.xml"));
+        var city1 = XmlSlurper.ParseText(utility.getFile("CityInfo.xml"));
+        var city2 = XmlSlurper.ParseFile(utility.getFileFullPath("CityInfo.xml"));
 
         foreach (var city in new[] { city1, city2 })
         {
@@ -199,8 +201,8 @@ public class XmlSlurperTests
     [Fact]
     public void T10_BoolIntDecimalDoubleTest()
     {
-        var settings1 = XmlSlurper.ParseText(getFile("HardwareSettings.xml"));
-        var settings2 = XmlSlurper.ParseFile(getFileFullPath("HardwareSettings.xml"));
+        var settings1 = XmlSlurper.ParseText(utility.getFile("HardwareSettings.xml"));
+        var settings2 = XmlSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.xml"));
 
         foreach (var settings in new[] { settings1, settings2 })
         {
@@ -232,8 +234,8 @@ public class XmlSlurperTests
     [Fact]
     public void T11_ConversionExceptionTest()
     {
-        var settings1 = XmlSlurper.ParseText(getFile("HardwareSettings.xml"));
-        var settings2 = XmlSlurper.ParseFile(getFileFullPath("HardwareSettings.xml"));
+        var settings1 = XmlSlurper.ParseText(utility.getFile("HardwareSettings.xml"));
+        var settings2 = XmlSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.xml"));
 
         foreach (var settings in new[] { settings1, settings2 })
         {
@@ -259,8 +261,8 @@ public class XmlSlurperTests
     [Fact]
     public void T12_CDataTest()
     {
-        var cdata1 = XmlSlurper.ParseText(getFile("CData.xml"));
-        var cdata2 = XmlSlurper.ParseFile(getFileFullPath("CData.xml"));
+        var cdata1 = XmlSlurper.ParseText(utility.getFile("CData.xml"));
+        var cdata2 = XmlSlurper.ParseFile(utility.getFileFullPath("CData.xml"));
 
         foreach (var cdata in new[] { cdata1, cdata2 })
         {
@@ -282,28 +284,35 @@ public class XmlSlurperTests
         }
     }
 
-    //[Fact(Skip = "on dev laptop")]
     [Fact]
     public void T13_BigXmlTest()
     {
-        var urlList = new List<string>()
-        {
-            // 1MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/mondial/mondial-3.0.xml" /*,
-            // 30 MB                
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.xml",
-            // 109 MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/SwissProt/SwissProt.xml",
-            // 683 MB
-            "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/pir/psd7003.xml"*/
-        };
+        var xmlList = new List<string>();
+        xmlList.Add(utility.getFile("mondial-3.0.xml"));
 
-        var getter = getHttpFiles(urlList);
-        getter.Wait(5 * 60 * 1000); // 5min max        
-        var stopWatch = new Stopwatch();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-        foreach (string xml in getter.Result)
-        {   
-            stopWatch.Reset();             
+        // not when building online
+        // TODO find a better condition to detect running local vs github
+        bool isLocal = Debugger.IsAttached;
+        if (isLocal)
+        {
+            var urlList = new List<string>()
+            {
+                // 30 MB                
+                "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/lineitem.xml" /*,
+                // 109 MB
+                "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/SwissProt/SwissProt.xml",
+                // 683 MB
+                "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/pir/psd7003.xml" */
+            };
+
+            var getter = utility.getHttpFiles(urlList);
+            getter.Wait(5 * 60 * 1000); // 5min max     
+            xmlList.AddRange(getter.Result);
+        }
+        var stopWatch = new Stopwatch();
+        foreach (string xml in xmlList)
+        {
+            stopWatch.Reset();
             stopWatch.Start();
             var cdata = XmlSlurper.ParseText(xml);
             stopWatch.Stop();
@@ -313,47 +322,5 @@ public class XmlSlurperTests
             Decimal speed = Math.Round(timeMs / fileSizeMb, 0);
             Console.WriteLine($"T13 Parsed {fileSizeMb} MB in {timeMs} ms (approx. {speed} ms/MB)");
         }
-    }
-
-    private string getFile(string fileName)
-    {
-        string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "testdata", fileName);
-        return File.ReadAllText(path, Encoding.UTF8);
-    }
-
-    private string getFileFullPath(string fileName)
-    {
-        string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "testdata", fileName);
-        return path;
-    }
-
-    private async Task<List<string>> getHttpFiles(List<string> urlList)
-    {
-        var list = new List<string>();
-        using (var client = new HttpClient())
-        {
-            foreach (var url in urlList)
-            {
-                try
-                {
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var content = await result.Content.ReadAsByteArrayAsync();
-                        list.Add(Encoding.UTF8.GetString(content));
-                        //Console.WriteLine($"GET HTTP: Read {Math.Round(list[list.Count - 1].Length / (1024m * 1024m), 2)} MB from {url}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"*** WARNING *** GET HTTP: Could not download from {url}, skipping.\r\nResult {result.StatusCode}: {result.ReasonPhrase}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"*** WARNING *** GET HTTP: Could not download from {url}, skipping.\r\nException {ex.GetType().FullName}: {ex.Message}");
-                }
-            }
-        }
-        return list;
     }
 }

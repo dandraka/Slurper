@@ -12,10 +12,13 @@ namespace Dandraka.Slurper.Tests;
 
 public class JsonSlurperTests
 {
+
+    private TestUtility utility = new TestUtility();
+
     [Fact]
     public void T01_ObjectNotNullTest()
     {
-        var city1 = JsonSlurper.ParseText(getFile("City.json"));
+        var city1 = JsonSlurper.ParseText(utility.getFile("City.json"));
         //var city2 = JsonSlurper.ParseFile(getFileFullPath("City.json"));
 
         foreach (var jsonData in new[] { city1 /*, city2*/ })
@@ -30,7 +33,7 @@ public class JsonSlurperTests
     [SkippableFact]
     public void T02_BaseJsonElementsTest()
     {
-        var person = JsonSlurper.ParseText(getFile("BaseJson.json"));
+        var person = JsonSlurper.ParseText(utility.getFile("BaseJson.json"));
 
         // assert simple elements
         Assert.Equal("Joe", person.Name);
@@ -56,8 +59,8 @@ public class JsonSlurperTests
     [Fact]
     public void T02_SimpleJsonElementsTest()
     {
-        var bookInfo1 = JsonSlurper.ParseText(getFile("Book.json"));
-        var bookInfo2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
+        var bookInfo1 = JsonSlurper.ParseText(utility.getFile("Book.json"));
+        var bookInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Book.json"));
 
         foreach (var bookInfo in new[] { bookInfo1, bookInfo2 })
         {
@@ -71,8 +74,8 @@ public class JsonSlurperTests
     [Fact]
     public void T03_SimpleJsonNodesTest()
     {
-        var bookInfo1 = JsonSlurper.ParseText(getFile("Book.json"));
-        var bookInfo2 = JsonSlurper.ParseFile(getFileFullPath("Book.json"));
+        var bookInfo1 = JsonSlurper.ParseText(utility.getFile("Book.json"));
+        var bookInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Book.json"));
 
         foreach (var bookInfo in new[] { bookInfo1, bookInfo2 })
         {
@@ -86,8 +89,8 @@ public class JsonSlurperTests
     [Fact]
     public void T04_JsonMultipleLevelsNodesTest()
     {
-        var settingsInfo1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
-        var settingsInfo2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
+        var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
+        var settingsInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.json"));
 
         foreach (var settingsInfo in new[] { settingsInfo1, settingsInfo2 })
         {
@@ -99,8 +102,8 @@ public class JsonSlurperTests
     [Fact(Skip = "Arrays not yet implemented")]
     public void T05_ListJsonNodesTest()
     {
-        var catalogInfo1 = JsonSlurper.ParseText(getFile("BookCatalog.json"));
-        var catalogInfo2 = JsonSlurper.ParseFile(getFileFullPath("BookCatalog.json"));
+        var catalogInfo1 = JsonSlurper.ParseText(utility.getFile("BookCatalog.json"));
+        var catalogInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("BookCatalog.json"));
 
         foreach (var catalogInfo in new[] { catalogInfo1, catalogInfo2 })
         {
@@ -134,8 +137,8 @@ public class JsonSlurperTests
     [Fact(Skip = "Arrays not yet implemented")]
     public void T06_BothPropertiesAndListRootXmlTest()
     {
-        var nutritionInfo1 = JsonSlurper.ParseText(getFile("Nutrition.json"));
-        var nutritionInfo2 = JsonSlurper.ParseFile(getFileFullPath("Nutrition.json"));
+        var nutritionInfo1 = JsonSlurper.ParseText(utility.getFile("Nutrition.json"));
+        var nutritionInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Nutrition.json"));
 
         foreach (var nutritionInfo in new[] { nutritionInfo1, nutritionInfo2 })
         {
@@ -156,8 +159,8 @@ public class JsonSlurperTests
     [Fact(Skip = "Arrays not yet implemented")]
     public void T07_BothPropertiesAndListRecursiveXmlTest()
     {
-        var cityInfo1 = JsonSlurper.ParseText(getFile("Cityinfo.json"));
-        var cityInfo2 = JsonSlurper.ParseFile(getFileFullPath("Cityinfo.json"));
+        var cityInfo1 = JsonSlurper.ParseText(utility.getFile("Cityinfo.json"));
+        var cityInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Cityinfo.json"));
 
         foreach (var cityInfo in new[] { cityInfo1, cityInfo2 })
         {
@@ -208,8 +211,8 @@ public class JsonSlurperTests
     [Fact]
     public void T10_BoolIntDecimalDoubleTest()
     {
-        var settingsInfo1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
-        var settingsInfo2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
+        var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
+        var settingsInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.json"));
 
         foreach (var settingsInfo in new[] { settingsInfo1, settingsInfo2 })
         {
@@ -241,8 +244,8 @@ public class JsonSlurperTests
     [Fact]
     public void T11_ConversionExceptionTest()
     {
-        var settingsInfo1 = JsonSlurper.ParseText(getFile("HardwareSettings.json"));
-        var settingsInfo2 = JsonSlurper.ParseFile(getFileFullPath("HardwareSettings.json"));
+        var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
+        var settingsInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.json"));
 
         foreach (var settingsInfo in new[] { settingsInfo1, settingsInfo2 })
         {
@@ -265,21 +268,32 @@ public class JsonSlurperTests
         }
     }
 
-    [Fact(Skip="run locally only")]
+    [Fact]
     public void T12_BigJsonTest()
     {
-        var urlList = new List<string>()
-        {
-            // 2.15MB
-            "https://github.com/miloyip/nativejson-benchmark/blob/master/data/canada.json?raw=true", 
-            // 25MB
-            "https://github.com/json-iterator/test-data/blob/master/large-file.json?raw=true"
-        };
+        var jsonList = new List<string>();
+        jsonList.Add(utility.getFile("socialsample.json"));
 
-        var getter = getHttpFiles(urlList);
-        getter.Wait(5 * 60 * 1000); // 5min max        
+        // not when building online
+        // TODO find a better condition to detect running local vs github
+        bool isLocal = Debugger.IsAttached;
+        if (isLocal)
+        {
+            var urlList = new List<string>()
+            {
+                // 2.15MB
+                "https://github.com/miloyip/nativejson-benchmark/blob/master/data/canada.json?raw=true" /*, 
+                // 25MB
+                "https://github.com/json-iterator/test-data/blob/master/large-file.json?raw=true"*/
+            };
+
+            var getter = utility.getHttpFiles(urlList);
+            getter.Wait(5 * 60 * 1000); // 5min max
+            jsonList.AddRange(getter.Result);
+        }
+
         var stopWatch = new Stopwatch();
-        foreach (string json in getter.Result)
+        foreach (string json in jsonList)
         {
             stopWatch.Reset();
             stopWatch.Start();
@@ -291,47 +305,5 @@ public class JsonSlurperTests
             Decimal speed = Math.Round(timeMs / fileSizeMb, 0);
             Console.WriteLine($"T13 Parsed {fileSizeMb} MB in {timeMs} ms (approx. {speed} ms/MB)");
         }
-    }
-
-    private string getFile(string fileName)
-    {
-        string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "testdata", fileName);
-        return File.ReadAllText(path);
-    }
-
-    private string getFileFullPath(string fileName)
-    {
-        string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "testdata", fileName);
-        return path;
-    }
-
-    private async Task<List<string>> getHttpFiles(List<string> urlList)
-    {
-        var list = new List<string>();
-        using (var client = new HttpClient())
-        {
-            foreach (var url in urlList)
-            {
-                try
-                {
-                    var result = await client.GetAsync(url);
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var content = await result.Content.ReadAsByteArrayAsync();
-                        list.Add(Encoding.UTF8.GetString(content));
-                        //Console.WriteLine($"GET HTTP: Read {Math.Round(list[list.Count - 1].Length / (1024m * 1024m), 2)} MB from {url}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"*** WARNING *** GET HTTP: Could not download from {url}, skipping.\r\nResult {result.StatusCode}: {result.ReasonPhrase}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"*** WARNING *** GET HTTP: Could not download from {url}, skipping.\r\nException {ex.GetType().FullName}: {ex.Message}");
-                }
-            }
-        }
-        return list;
     }
 }
