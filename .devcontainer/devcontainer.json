@@ -100,7 +100,7 @@
         "VisualStudioExptTeam.vscodeintellicode"
       ],
 
-      // "settings": {
+      "settings": {
         // Uncomment if you want to use zsh as the default shell
         // "terminal.integrated.defaultProfile.linux": "zsh",
         // "terminal.integrated.profiles.linux": {
