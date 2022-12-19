@@ -34,7 +34,7 @@
 				"VisualStudioExptTeam.vscodeintellicode"
 			],
 			"settings": {
-				"terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
+				"terminal.integrated.fontFamily": "'Fira Code', monospace",
 				"editor.minimap.enabled": false,
 				"explorer.sortOrder": "type",
 				"explorer.fileNesting.enabled": true,
