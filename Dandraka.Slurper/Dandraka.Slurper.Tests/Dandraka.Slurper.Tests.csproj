@@ -23,6 +23,9 @@
     <None Update="testdata\BaseJson.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="testdata\BaseJsonArray.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="testdata\Book.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -64,9 +67,9 @@
     </None>
     <None Update="testdata\socialsample.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>    
+    </None>
     <None Update="testdata\mondial-3.0.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>        
+    </None>
   </ItemGroup>
 </Project>

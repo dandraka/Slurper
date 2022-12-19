@@ -99,8 +99,7 @@ public static class JsonSlurper
             }
             if (jsonElement.ValueKind == JsonValueKind.Array)
             {
-                // TODO
-                //jsonChildren = jsonElement.EnumerateArray().Select(x => (object)x).ToList();
+                jsonChildren = jsonElement.EnumerateArray().Select(x => (object)x).ToList();
             }
 
             if (jsonChildren != null && jsonChildren.Any())
@@ -176,7 +175,7 @@ public static class JsonSlurper
     {
         if (!(jsonObj is JsonProperty))
         {
-            throw new NotSupportedException($"Type {jsonObj.GetType().FullName} is not supported");
+            //throw new NotSupportedException($"Type {jsonObj.GetType().FullName} is not supported");
         }
 
         string rawText = null;

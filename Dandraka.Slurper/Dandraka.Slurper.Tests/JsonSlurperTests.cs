@@ -31,29 +31,35 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T02_BaseJsonElementsTest()
+    public void T02a_BaseJsonElementsTest()
     {
-        var person = JsonSlurper.ParseText(utility.getFile("BaseJson.json"));
+        var person1 = JsonSlurper.ParseText(utility.getFile("BaseJson.json"));
+        
+        // assert simple elements
+        Assert.Equal("Joe", person1.Name);
+        Assert.Equal(22, person1.Age);
+        Assert.Equal(true, person1.CanDrive);
+
+        Assert.Null(person1.ContactDetails.ToString());
+        
+        // assert object
+        Assert.Equal("joe@hotmail.com", person1.ContactDetails.Email);
+        Assert.Equal("07738277382", person1.ContactDetails.Mobile);
+        Assert.Null(person1.ContactDetails.Fax.ToString());
+    }
+
+    [SkippableFact]
+    public void T02b_BaseJsonArrayTest()
+    {
+        var person2 = JsonSlurper.ParseText(utility.getFile("BaseJsonArray.json"));
 
         // assert simple elements
-        Assert.Equal("Joe", person.Name);
-        Assert.Equal(22, person.Age);
-        Assert.Equal(true, person.CanDrive);
+        Assert.Null(person2.Addresses.ToString());
 
-        Assert.Null(person.ContactDetails.ToString());
-        Assert.Null(person.Addresses.ToString());
-
-        // assert object
-        Assert.Equal("joe@hotmail.com", person.ContactDetails.Email);
-        Assert.Equal("07738277382", person.ContactDetails.Mobile);
-        Assert.Null(person.ContactDetails.Fax.ToString());
-
-        // assert array
-        Skip.If(true, "Arrays not yet implemented");
-        
-        Assert.Equal("15 Beer Bottle Street", person.Addresses[0].Line1);
-        Assert.Equal("Shell Cottage", person.Addresses[1].Line1);
-    }
+        // assert array        
+        Assert.Equal("15 Beer Bottle Street", person2.Addresses[0].Line1);
+        Assert.Equal("Shell Cottage", person2.Addresses[1].Line1);
+    }    
 
     [SkippableFact]
     public void T02_SimpleJsonElementsTest()
