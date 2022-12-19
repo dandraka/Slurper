@@ -109,8 +109,7 @@ public static class JsonSlurper
                     string jsonName = null;
                     if (jsonChild is JsonElement)
                     {
-                        // TODO
-                        jsonName = "lalala"; 
+                        jsonName = ((System.Text.Json.JsonProperty)obj).Name;
                     }
                     if (jsonChild is JsonProperty)
                     {
@@ -175,7 +174,8 @@ public static class JsonSlurper
     {
         if (!(jsonObj is JsonProperty))
         {
-            //throw new NotSupportedException($"Type {jsonObj.GetType().FullName} is not supported");
+            // nothing to see here
+            return null;
         }
 
         string rawText = null;
