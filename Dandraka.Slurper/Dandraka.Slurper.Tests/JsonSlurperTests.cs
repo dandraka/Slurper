@@ -54,6 +54,16 @@ public class JsonSlurperTests
         // assert array        
         Assert.Equal("15 Beer Bottle Street", person2.Addresses.AddressesList[0].Line1);
         Assert.Equal("Shell Cottage", person2.Addresses.AddressesList[1].Line1);
+    } 
+
+        [SkippableFact]
+    public void T03b_BareJsonArrayTest()
+    {
+        // Catalan numbers: C(n) = binomial(2n,n)/(n+1) = (2n)!/(n!(n+1)!)
+        var jsonObj = JsonSlurper.ParseText(utility.getFile("BareJsonArray.json"));
+
+        Assert.Equal(10, jsonObj.List.Count);
+        Assert.Equal(4862, jsonObj.List[9]);
     }    
 
     [SkippableFact]

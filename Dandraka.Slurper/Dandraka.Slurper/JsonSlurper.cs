@@ -93,6 +93,7 @@ public static class JsonSlurper
         {
             var jsonElement = (JsonElement)jsonObj;
             List<object> jsonChildren = null;
+
             if (jsonElement.ValueKind == JsonValueKind.Object)
             {
                 jsonChildren = jsonElement.EnumerateObject().Select(x => (object)x).ToList();
@@ -184,34 +185,53 @@ public static class JsonSlurper
 
     private static string getJsonPropertyValue(object jsonObj)
     {
-        if (!(jsonObj is JsonProperty))
+        if (!(jsonObj is JsonProperty) && !(jsonObj is JsonElement))
         {
             // nothing to see here
             return null;
         }
 
         string rawText = null;
-        switch (((JsonProperty)jsonObj).Value.ValueKind)
+
+        if (jsonObj is JsonElement)
         {
-            case JsonValueKind.String:
-                rawText = ((JsonProperty)jsonObj).Value.GetString();
-                break;
-            case JsonValueKind.Number:
-            case JsonValueKind.True:
-            case JsonValueKind.False:
-                // ToStringExpandoObject takes care about conversion
-                rawText = ((JsonProperty)jsonObj).Value.GetRawText();
-                break;
-            case JsonValueKind.Undefined:
-            case JsonValueKind.Object:
-            case JsonValueKind.Array:
-            case JsonValueKind.Null:
-                // stays null
-                break;
-            default:
-                throw new NotSupportedException($"JsonProperty ValueKind {((JsonProperty)jsonObj).Value.ValueKind} is not supported");
+            switch (((JsonElement)jsonObj).ValueKind)
+            {
+                case JsonValueKind.Number:
+                case JsonValueKind.String:
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                    // ToStringExpandoObject takes care about conversion
+                    rawText = ((JsonElement)jsonObj).GetRawText();
+                    break;
+                default:
+                    return null;
+            }
         }
 
+        if (jsonObj is JsonProperty)
+        {
+            switch (((JsonProperty)jsonObj).Value.ValueKind)
+            {
+                case JsonValueKind.String:
+                    rawText = ((JsonProperty)jsonObj).Value.GetString();
+                    break;
+                case JsonValueKind.Number:
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                    // ToStringExpandoObject takes care about conversion
+                    rawText = ((JsonProperty)jsonObj).Value.GetRawText();
+                    break;
+                case JsonValueKind.Undefined:
+                case JsonValueKind.Object:
+                case JsonValueKind.Array:
+                case JsonValueKind.Null:
+                    // stays null
+                    break;
+                default:
+                    throw new NotSupportedException($"JsonProperty ValueKind {((JsonProperty)jsonObj).Value.ValueKind} is not supported");
+            }
+        }
         Debug.WriteLine(rawText);
         return rawText;
     }

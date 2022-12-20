@@ -26,6 +26,9 @@
     <None Update="testdata\BaseJsonArray.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="testdata\BareJsonArray.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>    
     <None Update="testdata\Book.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
