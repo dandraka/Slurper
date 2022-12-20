@@ -26,7 +26,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T02a_BaseJsonElementsTest()
+    public void T02_BaseJsonElementsTest()
     {
         var person1 = JsonSlurper.ParseText(utility.getFile("BaseJson.json"));
         
@@ -44,7 +44,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T02b_BaseJsonArrayTest()
+    public void T03_BaseJsonArrayTest()
     {
         var person2 = JsonSlurper.ParseText(utility.getFile("BaseJsonArray.json"));
 
@@ -57,7 +57,7 @@ public class JsonSlurperTests
     }    
 
     [SkippableFact]
-    public void T03a_SimpleJsonElementsTest()
+    public void T04_SimpleJsonElementsTest()
     {
         var bookInfo1 = JsonSlurper.ParseText(utility.getFile("Book.json"));
         var bookInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Book.json"));
@@ -72,7 +72,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T03b_SimpleJsonNodesTest()
+    public void T05_SimpleJsonNodesTest()
     {
         var bookInfo1 = JsonSlurper.ParseText(utility.getFile("Book.json"));
         var bookInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Book.json"));
@@ -87,7 +87,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T04_JsonMultipleLevelsNodesTest()
+    public void T06_JsonMultipleLevelsNodesTest()
     {
         var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
         var settingsInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.json"));
@@ -100,7 +100,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T05_ListJsonNodesTest()
+    public void T07_ListJsonNodesTest()
     {
         var catalogInfo1 = JsonSlurper.ParseText(utility.getFile("BookCatalog.json"));
         var catalogInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("BookCatalog.json"));
@@ -135,7 +135,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T06_BothPropertiesAndListRootJsonTest()
+    public void T08_BothPropertiesAndListRootJsonTest()
     {
         var nutritionInfo1 = JsonSlurper.ParseText(utility.getFile("Nutrition.json"));
         var nutritionInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Nutrition.json"));
@@ -161,7 +161,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T07_BothPropertiesAndListRecursiveJsonTest()
+    public void T09_BothPropertiesAndListRecursiveJsonTest()
     {
         var cityInfo1 = JsonSlurper.ParseText(utility.getFile("Cityinfo.json"));
         var cityInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Cityinfo.json"));
@@ -186,7 +186,7 @@ public class JsonSlurperTests
     /// Usage showcase 1
     /// </summary>
     [SkippableFact]
-    public void T08_PrintJsonContents1()
+    public void T10_Usage_PrintJsonContents1_Simple()
     {
         string json = 
 @"{
@@ -198,17 +198,17 @@ public class JsonSlurperTests
         var book = JsonSlurper.ParseText(json);
 
         // that's it, now we have everything            
-        Console.WriteLine("T08 id = " + book.id);
-        Console.WriteLine("T08 isbn = " + book.isbn);
-        Console.WriteLine("T08 author = " + book.author);
-        Console.WriteLine("T08 title = " + book.title);
+        Console.WriteLine("J-T10 id = " + book.id);
+        Console.WriteLine("J-T10 isbn = " + book.isbn);
+        Console.WriteLine("J-T10 author = " + book.author);
+        Console.WriteLine("J-T10 title = " + book.title);
     }
 
     /// <summary>
     /// Usage showcase 2
     /// </summary>
     [SkippableFact]
-    public void T09_PrintJsonContents2()
+    public void T11_Usage_PrintJsonContents2_Array()
     {
         string json = 
 @"{
@@ -241,15 +241,15 @@ public class JsonSlurperTests
 
         // Since many nodes were found, a list was generated. 
         // It's named common name + "List", so in this case GroceriesList.
-        Console.WriteLine("T09 name1 = " + nutrition.Groceries.GroceriesList[0].name);
-        Console.WriteLine("T09 name2 = " + nutrition.Groceries.GroceriesList[1].name);
+        Console.WriteLine("J-T11 name1 = " + nutrition.Groceries.GroceriesList[0].name);
+        Console.WriteLine("J-T11 name2 = " + nutrition.Groceries.GroceriesList[1].name);
     }    
 
     /// <summary>
     /// Usage showcase 3
     /// </summary>
     [SkippableFact]
-    public void T09_PrintJsonContents3()
+    public void T12_Usage_PrintJsonContents3_TopLevelArray()
     {
         string json = 
 @"[
@@ -278,15 +278,15 @@ public class JsonSlurperTests
         var nutrition = JsonSlurper.ParseText(json);
 
         // Since many nodes were found, a list was generated and named List. 
-        // Normally it's named common name + "List" (e.g. FruitList) but
-        // in this case the parent of the array is nameless (it's the root)
-        // ergo just "List".
-        Console.WriteLine("T09 name1 = " + nutrition.List[0].name);
-        Console.WriteLine("T09 name2 = " + nutrition.List[1].name);
+        // Normally it's named common name + "List" (e.g. GroceriesList) 
+        // but in this case the parent of the array is nameless 
+        // (it's the root) ergo just "List".
+        Console.WriteLine("J-T12 name1 = " + nutrition.List[0].name);
+        Console.WriteLine("J-T12 name2 = " + nutrition.List[1].name);
     }
 
     [SkippableFact]
-    public void T10_BoolIntDecimalDoubleTest()
+    public void T13_BoolIntDecimalDoubleTest()
     {
         var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
         var settingsInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.json"));
@@ -319,7 +319,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T11_ConversionExceptionTest()
+    public void T14_ConversionExceptionTest()
     {
         var settingsInfo1 = JsonSlurper.ParseText(utility.getFile("HardwareSettings.json"));
         var settingsInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("HardwareSettings.json"));
@@ -346,7 +346,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T12_BigJsonTest()
+    public void T15_BigJsonTest()
     {
         var jsonList = new List<string>();
         jsonList.Add(utility.getFile("socialsample.json"));
@@ -359,9 +359,9 @@ public class JsonSlurperTests
             var urlList = new List<string>()
             {
                 // 2.15MB
-                "https://github.com/miloyip/nativejson-benchmark/blob/master/data/canada.json?raw=true" /*, 
+                "https://github.com/miloyip/nativejson-benchmark/blob/master/data/canada.json?raw=true", 
                 // 25MB
-                "https://github.com/json-iterator/test-data/blob/master/large-file.json?raw=true"*/
+                "https://github.com/json-iterator/test-data/blob/master/large-file.json?raw=true"
             };
 
             var getter = utility.getHttpFiles(urlList);
@@ -380,7 +380,7 @@ public class JsonSlurperTests
             Decimal fileSizeMb = Math.Round(json.Length / (1024m * 1024m), 2);
             Int64 timeMs = stopWatch.ElapsedMilliseconds;
             Decimal speed = Math.Round(timeMs / fileSizeMb, 0);
-            Console.WriteLine($"T13 Parsed {fileSizeMb} MB in {timeMs} ms (approx. {speed} ms/MB)");
+            Console.WriteLine($"J-T15 Parsed {fileSizeMb} MB in {timeMs} ms (approx. {speed} ms/MB)");
         }
     }
 }

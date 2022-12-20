@@ -155,10 +155,10 @@ public class XmlSlurperTests
         var book = XmlSlurper.ParseText(xml);
 
         // that's it, now we have everything            
-        Console.WriteLine("T08 id = " + book.id);
-        Console.WriteLine("T08 isbn = " + book.isbn);
-        Console.WriteLine("T08 author = " + book.author);
-        Console.WriteLine("T08 title = " + book.title);
+        Console.WriteLine($"X-T08 id = " + book.id);
+        Console.WriteLine($"X-T08 isbn = " + book.isbn);
+        Console.WriteLine($"X-T08 author = " + book.author);
+        Console.WriteLine($"X-T08 title = " + book.title);
     }
 
     /// <summary>
@@ -194,8 +194,8 @@ public class XmlSlurperTests
         var nutrition = XmlSlurper.ParseText(xml);
 
         // since many food nodes were found, a list was generated and named foodList (common name + "List")
-        Console.WriteLine("T09 name1 = " + nutrition.foodList[0].name);
-        Console.WriteLine("T09 name2 = " + nutrition.foodList[1].name);
+        Console.WriteLine($"X-T09 name1 = " + nutrition.foodList[0].name);
+        Console.WriteLine($"X-T09 name2 = " + nutrition.foodList[1].name);
     }
 
     [SkippableFact]
@@ -320,7 +320,7 @@ public class XmlSlurperTests
             Decimal fileSizeMb = Math.Round(xml.Length / (1024m * 1024m), 2);
             Int64 timeMs = stopWatch.ElapsedMilliseconds;
             Decimal speed = Math.Round(timeMs / fileSizeMb, 0);
-            Console.WriteLine($"T13 Parsed {fileSizeMb} MB in {timeMs} ms (approx. {speed} ms/MB)");
+            Console.WriteLine($"X-T13 Parsed {fileSizeMb} MB in {timeMs} ms (approx. {speed} ms/MB)");
         }
     }
 }
