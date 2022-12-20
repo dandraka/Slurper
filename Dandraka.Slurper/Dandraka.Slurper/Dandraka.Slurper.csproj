@@ -7,12 +7,13 @@
     <Company>dandraka.com</Company>
     <Description>An XmlSlurper implementation in .Net for Xml and Json.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/dandraka/Slurper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dandraka/Slurper/</RepositoryUrl>
     <Copyright>Copyright (c) 2017 Jim (Dimitrios) Andrakakis</Copyright>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>2.0</Version>
+    <Version>2.0.1</Version>
     <PackageReleaseNotes>Release 2.0 is fully backwards compatible with all previous ones, the only change needed is to change the namespace from Dandraka.XmlUtilities to Dandraka.Slurper.
 In addition to XmlSlurper, a JsonSlurper is now implemented.
     </PackageReleaseNotes>
@@ -28,6 +29,7 @@ In addition to XmlSlurper, a JsonSlurper is now implemented.
   <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     <None Include="icon.png" Pack="true" PackagePath="icon.png" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
