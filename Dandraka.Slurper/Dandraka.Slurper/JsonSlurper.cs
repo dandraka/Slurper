@@ -109,7 +109,19 @@ public static class JsonSlurper
                     string jsonName = null;
                     if (jsonChild is JsonElement)
                     {
-                        jsonName = ((System.Text.Json.JsonProperty)obj).Name;
+                        string parentType = obj.GetType().Name;
+                        switch(parentType)
+                        {
+                            case "JsonElement":
+                                // parent is nameless
+                                jsonName = string.Empty;
+                                break;
+                            case "JsonProperty":
+                                jsonName = ((JsonProperty)obj).Name;
+                                break;
+                            default:
+                                throw new NotSupportedException($"Unsupported parent type '{obj.GetType().FullName}' of node:\r\n{jsonChild}");
+                        }                        
                     }
                     if (jsonChild is JsonProperty)
                     {

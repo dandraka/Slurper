@@ -107,7 +107,7 @@ public class JsonSlurperTests
 
         foreach (var catalogInfo in new[] { catalogInfo1, catalogInfo2 })
         {
-            var bookList = catalogInfo.catalog.bookList;
+            var bookList = catalogInfo.catalog.book.bookList;
 
             Assert.Equal(12, bookList.Count);
 
@@ -135,14 +135,18 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T06_BothPropertiesAndListRootXmlTest()
+    public void T06_BothPropertiesAndListRootJsonTest()
     {
         var nutritionInfo1 = JsonSlurper.ParseText(utility.getFile("Nutrition.json"));
         var nutritionInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Nutrition.json"));
 
         foreach (var nutritionInfo in new[] { nutritionInfo1, nutritionInfo2 })
         {
-            var foodList = nutritionInfo.nutrition.foodList;
+            var dailyvalues = nutritionInfo.nutrition.dailyvalues;
+            Assert.Equal("g", dailyvalues.totalfat.units);
+            Assert.Equal(65, dailyvalues.totalfat.text);
+
+            var foodList = nutritionInfo.nutrition.food.foodList;
 
             Assert.Equal(10, foodList.Count);
 
@@ -157,7 +161,7 @@ public class JsonSlurperTests
     }
 
     [SkippableFact]
-    public void T07_BothPropertiesAndListRecursiveXmlTest()
+    public void T07_BothPropertiesAndListRecursiveJsonTest()
     {
         var cityInfo1 = JsonSlurper.ParseText(utility.getFile("Cityinfo.json"));
         var cityInfo2 = JsonSlurper.ParseFile(utility.getFileFullPath("Cityinfo.json"));
@@ -169,20 +173,28 @@ public class JsonSlurperTests
             Assert.Equal("Wilen bei Wollerau", cityInfo.City.Name);
             Assert.Equal("Freienbach", cityInfo.City.Gemeinde);
 
-            Assert.Equal(3, cityInfo.City.StreetList.Count);
+            Assert.Equal(3, cityInfo.City.Street.StreetList.Count);
 
-            Assert.Equal("8832", cityInfo.City.StreetList[2].PostCode);
-            Assert.Equal(3, cityInfo.City.StreetList[2].HouseNumberList.Count);
+            // note that the underscore ("_name" in the file) gets removed
+            Assert.Equal("Wolleraustrasse", cityInfo.City.Street.StreetList[0].name);
+            Assert.Equal("8832", cityInfo.City.Street.StreetList[2].PostCode);            
+            Assert.Equal(3, cityInfo.City.Street.StreetList[2].HouseNumber.HouseNumberList.Count);
         }
     }
 
     /// <summary>
-    /// Usage showcase
+    /// Usage showcase 1
     /// </summary>
     [SkippableFact]
     public void T08_PrintJsonContents1()
     {
-        string json = "{  \"id\": \"bk101\",  \"isbn\": \"123456789\",  \"author\": \"Gambardella, Matthew\",  \"title\": \"XML Developer Guide\"}";
+        string json = 
+@"{
+  'id': 'bk101',
+  'isbn': '123456789',
+  'author': 'Gambardella, Matthew',
+  'title': 'XML Developer Guide'
+}".Replace("'", "\"");;
         var book = JsonSlurper.ParseText(json);
 
         // that's it, now we have everything            
@@ -193,18 +205,84 @@ public class JsonSlurperTests
     }
 
     /// <summary>
-    /// Usage showcase
+    /// Usage showcase 2
     /// </summary>
     [SkippableFact]
-    //[SkippableFact]
     public void T09_PrintJsonContents2()
     {
-        string json = "[  {    \"name\": \"Avocado Dip\",    \"mfr\": \"Sunnydale\",    \"carb\": \"2\",    \"fiber\": \"0\",    \"protein\": \"1\"  },  {    \"name\": \"Bagels, New York Style\",    \"mfr\": \"Thompson\",    \"carb\": \"54\",    \"fiber\": \"3\",    \"protein\": \"11\"  },  {    \"name\": \"Beef Frankfurter, Quarter Pound\",    \"mfr\": \"Armitage\",    \"carb\": \"8\",    \"fiber\": \"0\",    \"protein\": \"13\"  }]";
+        string json = 
+@"{
+'Groceries': 
+    [
+        {
+            'name': 'Avocado Dip',
+            'mfr': 'Sunnydale',
+            'carb': '2',
+            'fiber': '0',
+            'protein': '1'
+        },
+        {
+            'name': 'Bagels, New York Style',
+            'mfr': 'Thompson',
+            'carb': '54',
+            'fiber': '3',
+            'protein': '11'
+        },
+        {
+            'name': 'Beef Frankfurter, Quarter Pound',
+            'mfr': 'Armitage',
+            'carb': '8',
+            'fiber': '0',
+            'protein': '13'
+        }
+    ]
+}".Replace("'", "\"");
         var nutrition = JsonSlurper.ParseText(json);
 
-        // since many food nodes were found, a list was generated and named foodList (common name + "List")
-        Console.WriteLine("T09 name1 = " + nutrition.foodList[0].name);
-        Console.WriteLine("T09 name2 = " + nutrition.foodList[1].name);
+        // Since many nodes were found, a list was generated. 
+        // It's named common name + "List", so in this case GroceriesList.
+        Console.WriteLine("T09 name1 = " + nutrition.Groceries.GroceriesList[0].name);
+        Console.WriteLine("T09 name2 = " + nutrition.Groceries.GroceriesList[1].name);
+    }    
+
+    /// <summary>
+    /// Usage showcase 3
+    /// </summary>
+    [SkippableFact]
+    public void T09_PrintJsonContents3()
+    {
+        string json = 
+@"[
+  {
+    'name': 'Avocado Dip',
+    'mfr': 'Sunnydale',
+    'carb': '2',
+    'fiber': '0',
+    'protein': '1'
+  },
+  {
+    'name': 'Bagels, New York Style',
+    'mfr': 'Thompson',
+    'carb': '54',
+    'fiber': '3',
+    'protein': '11'
+  },
+  {
+    'name': 'Beef Frankfurter, Quarter Pound',
+    'mfr': 'Armitage',
+    'carb': '8',
+    'fiber': '0',
+    'protein': '13'
+  }
+]".Replace("'", "\"");
+        var nutrition = JsonSlurper.ParseText(json);
+
+        // Since many nodes were found, a list was generated and named List. 
+        // Normally it's named common name + "List" (e.g. FruitList) but
+        // in this case the parent of the array is nameless (it's the root)
+        // ergo just "List".
+        Console.WriteLine("T09 name1 = " + nutrition.List[0].name);
+        Console.WriteLine("T09 name2 = " + nutrition.List[1].name);
     }
 
     [SkippableFact]
