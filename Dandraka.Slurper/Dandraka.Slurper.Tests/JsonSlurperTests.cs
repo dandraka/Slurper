@@ -194,7 +194,7 @@ public class JsonSlurperTests
   'isbn': '123456789',
   'author': 'Gambardella, Matthew',
   'title': 'XML Developer Guide'
-}".Replace("'", "\"");;
+}".Replace("'", "\"");
         var book = JsonSlurper.ParseText(json);
 
         // that's it, now we have everything            
@@ -237,12 +237,15 @@ public class JsonSlurperTests
         }
     ]
 }".Replace("'", "\"");
+        JsonSlurper.ListSuffix = "Inventory";
         var nutrition = JsonSlurper.ParseText(json);
 
         // Since many nodes were found, a list was generated. 
         // It's named common name + "List", so in this case GroceriesList.
-        Console.WriteLine("J-T11 name1 = " + nutrition.Groceries.GroceriesList[0].name);
-        Console.WriteLine("J-T11 name2 = " + nutrition.Groceries.GroceriesList[1].name);
+        // But note that we've changed the value of ListSuffix to Inventory,
+        // so the list name will become GroceriesInventory.
+        Console.WriteLine("J-T11 name1 = " + nutrition.Groceries.GroceriesInventory[0].name);
+        Console.WriteLine("J-T11 name2 = " + nutrition.Groceries.GroceriesInventory[1].name);
     }    
 
     /// <summary>
@@ -274,7 +277,7 @@ public class JsonSlurperTests
     'fiber': '0',
     'protein': '13'
   }
-]".Replace("'", "\"");
+]".Replace("'", "\"");        
         var nutrition = JsonSlurper.ParseText(json);
 
         // Since many nodes were found, a list was generated and named List. 

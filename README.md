@@ -13,6 +13,22 @@ What this does, is convert a piece of xml, e.g.
  </card>
 ```
 
+or json, e.g.
+
+```
+{
+  "card": {
+    "name": "John Doe",
+    "title": "CEO, Widget Inc.",
+    "email": "john.doe@widget.com",
+    "phone": "(202) 456-1414",
+    "logo": {
+      "url": "widget.gif",
+    }
+  }
+}
+```
+
 to a C# object, e.g.
 
 ```
@@ -23,12 +39,80 @@ card.phone
 card.logo.url
 ```
 
-This is done ***without any need to declare the type*** . Behind the scenes it uses a class similar to System.Dynamic.ExpandoObject, named [ToStringExpandoObject](https://gist.github.com/kcuzner/3670e78ae1707a0e959d).
+This is done ***without any need to declare the type***. Behind the scenes it uses a class similar to System.Dynamic.ExpandoObject, named [ToStringExpandoObject](https://gist.github.com/kcuzner/3670e78ae1707a0e959d).
 
 ## Downloading:
 Under the Release tab you can find the binaries to download, but the ***recommended*** way is to use it as a nuget dependency. The nuget package is named Dandraka.Slurper, here: https://www.nuget.org/packages/Dandraka.Slurper .
 
 ## Usage:
+
+The library contains two classes, XmlSlurper and JsonSlurper. Both of them are static and contain two methods: ```ParseFile(string path)``` which accepts a filename and ```ParseText(string text)``` which accepts xml and json text respectively.
+
+Both of them have a settable string property ```ListSuffix``` which has the default value of List. This is used when encountering arrays; a property is generated that is named as ```<commonName><ListSuffix>```. For example, parsing the following xml:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+  <Groceries>
+    <name>Avocado Dip</name>
+    <mfr>Sunnydale</mfr>
+    <carb>2</carb>
+    <fiber>0</fiber>
+    <protein>1</protein>
+  </Groceries>
+  <Groceries>
+    <name>Bagels, New York Style</name>
+    <mfr>Thompson</mfr>
+    <carb>54</carb>
+    <fiber>3</fiber>
+    <protein>11</protein>
+  </Groceries>
+  <Groceries>
+    <name>Beef Frankfurter, Quarter Pound</name>
+    <mfr>Armitage</mfr>
+    <carb>8</carb>
+    <fiber>0</fiber>
+    <protein>13</protein>
+  </Groceries>
+```
+
+will return _Bagels, New York Style_ under ```xmlObj.GroceriesList[1].name```.
+
+In a similar way, parsing the following json:
+
+```
+{
+'Groceries': 
+    [
+        {
+            'name': 'Avocado Dip',
+            'mfr': 'Sunnydale',
+            'carb': '2',
+            'fiber': '0',
+            'protein': '1'
+        },
+        {
+            'name': 'Bagels, New York Style',
+            'mfr': 'Thompson',
+            'carb': '54',
+            'fiber': '3',
+            'protein': '11'
+        },
+        {
+            'name': 'Beef Frankfurter, Quarter Pound',
+            'mfr': 'Armitage',
+            'carb': '8',
+            'fiber': '0',
+            'protein': '13'
+        }
+    ]
+}
+```
+
+will return _Bagels, New York Style_ under ```jsonObj.Groceries.GroceriesList[1].name```.
+
+If the value of ```ListSuffix``` is changed to, say, 'Catalogue', the above object with be ```jsonObj.Groceries.GroceriesCatalogue[1].name```.
+
+## Examples:
 
 ```
 using Dandraka.Slurper;
@@ -97,8 +181,106 @@ public void ReadSettings()
 }
 ```
 
+```
+using Dandraka.Slurper;
+
+public void PrintJsonContents1_Simple()
+{
+	string json = 
+@"{
+  'id': 'bk101',
+  'isbn': '123456789',
+  'author': 'Gambardella, Matthew',
+  'title': 'XML Developer Guide'
+}".Replace("'", "\"");
+	var book = JsonSlurper.ParseText(json);
+
+	// that's it, now we have everything            
+	Console.WriteLine("J-T10 id = " + book.id);
+	Console.WriteLine("J-T10 isbn = " + book.isbn);
+	Console.WriteLine("J-T10 author = " + book.author);
+	Console.WriteLine("J-T10 title = " + book.title);
+}
+
+public void PrintJsonContents2_Array()
+{
+	string json = 
+@"{
+'Groceries': 
+[
+	{
+		'name': 'Avocado Dip',
+		'mfr': 'Sunnydale',
+		'carb': '2',
+		'fiber': '0',
+		'protein': '1'
+	},
+	{
+		'name': 'Bagels, New York Style',
+		'mfr': 'Thompson',
+		'carb': '54',
+		'fiber': '3',
+		'protein': '11'
+	},
+	{
+		'name': 'Beef Frankfurter, Quarter Pound',
+		'mfr': 'Armitage',
+		'carb': '8',
+		'fiber': '0',
+		'protein': '13'
+	}
+]
+}".Replace("'", "\"");
+	JsonSlurper.ListSuffix = "Inventory";
+	var nutrition = JsonSlurper.ParseText(json);
+
+	// Since many nodes were found, a list was generated. 
+	// It's named common name + "List", so in this case GroceriesList.
+	// But note that we've changed the value of ListSuffix to Inventory,
+	// so the list name will become GroceriesInventory.
+	Console.WriteLine("J-T11 name1 = " + nutrition.Groceries.GroceriesInventory[0].name);
+	Console.WriteLine("J-T11 name2 = " + nutrition.Groceries.GroceriesInventory[1].name);
+}    
+
+public void PrintJsonContents3_TopLevelArray()
+{
+	string json = 
+@"[
+	{
+		'name': 'Avocado Dip',
+		'mfr': 'Sunnydale',
+		'carb': '2',
+		'fiber': '0',
+		'protein': '1'
+	},
+	{
+		'name': 'Bagels, New York Style',
+		'mfr': 'Thompson',
+		'carb': '54',
+		'fiber': '3',
+		'protein': '11'
+	},
+	{
+		'name': 'Beef Frankfurter, Quarter Pound',
+		'mfr': 'Armitage',
+		'carb': '8',
+		'fiber': '0',
+		'protein': '13'
+	}
+]".Replace("'", "\"");
+	var nutrition = JsonSlurper.ParseText(json);
+
+	// Since many nodes were found, a list was generated and named List. 
+	// Normally it's named common name + "List" (e.g. GroceriesList) 
+	// but in this case the parent of the array is nameless 
+	// (it's the root) ergo just "List".
+	Console.WriteLine("J-T12 name1 = " + nutrition.List[0].name);
+	Console.WriteLine("J-T12 name2 = " + nutrition.List[1].name);
+}
+```
+
 ## Releases: 
-Release 2.0 implements JsonSlurper and is fully backwards compatible with all previous versions; the only change needed is to change the using clauses, from:
+Release 2.0 is renamed, from XmlUtilities to Slurper (since it's more than Xml now, duh 😊). It implements JsonSlurper alongside XmlSlurper and is fully backwards compatible with all previous versions; the only change needed is to change the using clauses, from:
 
 ```using Dandraka.XmlUtilities;``` 
 
