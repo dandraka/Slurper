@@ -196,10 +196,10 @@ public void PrintJsonContents1_Simple()
 	var book = JsonSlurper.ParseText(json);
 
 	// that's it, now we have everything            
-	Console.WriteLine("J-T10 id = " + book.id);
-	Console.WriteLine("J-T10 isbn = " + book.isbn);
-	Console.WriteLine("J-T10 author = " + book.author);
-	Console.WriteLine("J-T10 title = " + book.title);
+	Console.WriteLine("id = " + book.id);
+	Console.WriteLine("isbn = " + book.isbn);
+	Console.WriteLine("author = " + book.author);
+	Console.WriteLine("title = " + book.title);
 }
 
 public void PrintJsonContents2_Array()
@@ -238,8 +238,8 @@ public void PrintJsonContents2_Array()
 	// It's named common name + "List", so in this case GroceriesList.
 	// But note that we've changed the value of ListSuffix to Inventory,
 	// so the list name will become GroceriesInventory.
-	Console.WriteLine("J-T11 name1 = " + nutrition.Groceries.GroceriesInventory[0].name);
-	Console.WriteLine("J-T11 name2 = " + nutrition.Groceries.GroceriesInventory[1].name);
+	Console.WriteLine("name1 = " + nutrition.Groceries.GroceriesInventory[0].name);
+	Console.WriteLine("name2 = " + nutrition.Groceries.GroceriesInventory[1].name);
 }    
 
 public void PrintJsonContents3_TopLevelArray()
@@ -274,8 +274,8 @@ public void PrintJsonContents3_TopLevelArray()
 	// Normally it's named common name + "List" (e.g. GroceriesList) 
 	// but in this case the parent of the array is nameless 
 	// (it's the root) ergo just "List".
-	Console.WriteLine("J-T12 name1 = " + nutrition.List[0].name);
-	Console.WriteLine("J-T12 name2 = " + nutrition.List[1].name);
+	Console.WriteLine("name1 = " + nutrition.List[0].name);
+	Console.WriteLine("name2 = " + nutrition.List[1].name);
 }
 ```
 
