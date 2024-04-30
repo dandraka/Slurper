@@ -288,19 +288,20 @@ Imports System.Linq
 Imports System.Collections.Generic
 Imports System.IO
 
+				
 Public Module Module1
 	Public Sub Main()
 		
 		Dim myXml As String = "<Vegetable><name>Avocado Dip</name><mfr>Sunnydale</mfr><nutrient><name>carb</name><value>2</value></nutrient><nutrient><name>fiber</name><value>1</value></nutrient><nutrient><name>protein</name><value>11</value></nutrient></Vegetable>"
 		
-		Dim mydata
-		mydata = XmlSlurper.ParseText(myXml)
-		Console.WriteLine("Vegetable name: " & mydata.name.ToString)
-		Console.WriteLine("Vegetable manufacturer: " & mydata.mfr.ToString)
+		Dim myVegetable
+		myVegetable = XmlSlurper.ParseText(myXml)
+		Console.WriteLine("Vegetable name: " & myVegetable.name.ToString)
+		Console.WriteLine("Vegetable manufacturer: " & myVegetable.mfr.ToString)
 		Console.WriteLine()
-		Dim list As List(Of Dandraka.Slurper.ToStringExpandoObject) = mydata.nutrientList
-		Dim proteinContent As Object = list.FirstOrDefault(Function(i) CType(i, Object).name = "protein")
-		Console.WriteLine(proteinContent.name.ToString() + " - " + proteinContent.value.ToString())
+		Dim myNutrientsList As List(Of Dandraka.Slurper.ToStringExpandoObject) = myVegetable.nutrientList
+		Dim proteinNutrient As Object = myNutrientsList.FirstOrDefault(Function(i) CType(i, Object).name = "protein")
+		Console.WriteLine(proteinNutrient.name.ToString() + " - " + proteinNutrient.value.ToString())
 		Console.ReadLine()
 	End Sub
 End Module
