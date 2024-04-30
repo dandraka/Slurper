@@ -279,6 +279,33 @@ public void PrintJsonContents3_TopLevelArray()
 }
 ```
 
+A VB.Net example:
+
+```
+Imports Dandraka.Slurper
+Imports System
+Imports System.Linq
+Imports System.Collections.Generic
+Imports System.IO
+
+Public Module Module1
+	Public Sub Main()
+		
+		Dim myXml As String = "<Vegetable><name>Avocado Dip</name><mfr>Sunnydale</mfr><nutrient><name>carb</name><value>2</value></nutrient><nutrient><name>fiber</name><value>1</value></nutrient><nutrient><name>protein</name><value>11</value></nutrient></Vegetable>"
+		
+		Dim mydata
+		mydata = XmlSlurper.ParseText(myXml)
+		Console.WriteLine("Vegetable name: " & mydata.name.ToString)
+		Console.WriteLine("Vegetable manufacturer: " & mydata.mfr.ToString)
+		Console.WriteLine()
+		Dim list As List(Of Dandraka.Slurper.ToStringExpandoObject) = mydata.nutrientList
+		Dim proteinContent As Object = list.FirstOrDefault(Function(i) CType(i, Object).name = "protein")
+		Console.WriteLine(proteinContent.name.ToString() + " - " + proteinContent.value.ToString())
+		Console.ReadLine()
+	End Sub
+End Module
+```
+
 ## Releases: 
 Release 2.0 is renamed, from XmlUtilities to Slurper (since it's more than Xml now, duh 😊). It implements JsonSlurper alongside XmlSlurper and is fully backwards compatible with all previous versions; the only change needed is to change the using clauses, from:
 
