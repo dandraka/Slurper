@@ -13,9 +13,9 @@
     <RepositoryUrl>https://github.com/dandraka/Slurper/</RepositoryUrl>
     <Copyright>Copyright (c) 2017 Jim (Dimitrios) Andrakakis</Copyright>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>2.0.3</Version>
+    <Version>2.0.4</Version>
     <PackageReleaseNotes>Release 2.x is fully backwards compatible with all previous ones, the only change needed is to change the namespace from Dandraka.XmlUtilities to Dandraka.Slurper.
-In addition to XmlSlurper, a JsonSlurper is now implemented.
+In addition to XmlSlurper, a JsonSlurper is now implemented. Version 2.0.4 resolves the high severity CVE-2024-30105 security issue.
     </PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>xml json parsing dynamic</PackageTags>
