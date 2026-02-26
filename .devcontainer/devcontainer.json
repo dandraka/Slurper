@@ -4,11 +4,11 @@
 		"dockerfile": "./Dockerfile",
 		"context": ".",
 		"args": {
-			"VARIANT": "6.0-jammy"
+			"VARIANT": "10.0-noble"
 		}
 	},
 	"features": {
-		"ghcr.io/devcontainers/features/common-utils:1": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
 			"installZsh": false,
 			"installOhMyZsh": false,
 			"upgradePackages": true,
@@ -18,7 +18,7 @@
 		}
 	},
 	"overrideFeatureInstallOrder": [
-		"ghcr.io/devcontainers/features/common-utils"
+		"ghcr.io/devcontainers/features/common-utils:2"
 	],
 	"customizations": {
 		"vscode": {
