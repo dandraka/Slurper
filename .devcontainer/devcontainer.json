@@ -4,7 +4,7 @@
 		"dockerfile": "./Dockerfile",
 		"context": ".",
 		"args": {
-			"VARIANT": "10.0-preview-noble"
+			"VARIANT": "10.0-noble"
 		}
 	},
 	"features": {
